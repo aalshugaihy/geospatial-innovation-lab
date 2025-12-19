@@ -241,3 +241,34 @@ export const projects = mysqlTable("projects", {
 
 export type Project = typeof projects.$inferSelect;
 export type InsertProject = typeof projects.$inferInsert;
+
+/**
+ * Resource Ratings table - for rating resources
+ */
+export const resourceRatings = mysqlTable("resourceRatings", {
+  id: int("id").autoincrement().primaryKey(),
+  resourceId: int("resourceId").notNull(),
+  userId: int("userId").notNull(),
+  rating: int("rating").notNull(), // 1-5
+  review: text("review"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ResourceRating = typeof resourceRatings.$inferSelect;
+export type InsertResourceRating = typeof resourceRatings.$inferInsert;
+
+/**
+ * Project Comments table - for commenting on projects
+ */
+export const projectComments = mysqlTable("projectComments", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("projectId").notNull(),
+  userId: int("userId").notNull(),
+  comment: text("comment").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ProjectComment = typeof projectComments.$inferSelect;
+export type InsertProjectComment = typeof projectComments.$inferInsert;

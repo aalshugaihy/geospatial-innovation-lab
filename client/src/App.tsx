@@ -13,6 +13,8 @@ import Analytics from "./pages/Analytics";
 import UserManagement from "./pages/UserManagement";
 import Resources from "./pages/Resources";
 import Projects from "./pages/Projects";
+import ResourceAnalytics from "./pages/ResourceAnalytics";
+import UploadResource from "./pages/UploadResource";
 import About from "./pages/About";
 import Incubator from "./pages/initiatives/Incubator";
 import Accelerator from "./pages/initiatives/Accelerator";
@@ -35,6 +37,8 @@ function Router() {
       <Route path={"/analytics"} component={Analytics} />
       <Route path={"/user-management"} component={UserManagement} />
       <Route path={"/resources"} component={Resources} />
+      <Route path={"/resource-analytics"} component={ResourceAnalytics} />
+      <Route path={"/upload-resource"} component={UploadResource} />
       <Route path={"/projects"} component={Projects} />
       <Route path={"/about"} component={About} />
       <Route path={"/initiatives/incubator"} component={Incubator} />

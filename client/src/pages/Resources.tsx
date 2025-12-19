@@ -18,7 +18,8 @@ import {
 } from "@/components/ui/select";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Search, FileText, Video, Link as LinkIcon, Download, Upload, Filter } from "lucide-react";
+import { Search, FileText, Video, Link as LinkIcon, Download, Upload, Filter, BarChart3 } from "lucide-react";
+import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -97,12 +98,22 @@ export default function Resources() {
                 موارد تعليمية وأدوات لدعم رحلتك في الابتكار الجيومكاني
               </p>
             </div>
-            {user?.role === 'admin' && (
-              <Button className="gap-2">
-                <Upload className="h-4 w-4" />
-                رفع مورد جديد
-              </Button>
-            )}
+            <div className="flex gap-2">
+              <Link href="/resource-analytics">
+                <Button variant="outline" className="gap-2">
+                  <BarChart3 className="h-4 w-4" />
+                  الإحصائيات
+                </Button>
+              </Link>
+              {user?.role === 'admin' && (
+                <Link href="/upload-resource">
+                  <Button className="gap-2">
+                    <Upload className="h-4 w-4" />
+                    رفع مورد جديد
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* Search and Filters */}

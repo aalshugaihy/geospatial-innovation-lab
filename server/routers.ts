@@ -148,6 +148,23 @@ export const appRouter = router({
     list: publicProcedure.query(async () => {
       return await db.getPublicResources();
     }),
+    create: protectedProcedure
+      .input(z.object({
+        title: z.string(),
+        description: z.string(),
+        resourceType: z.enum(['document', 'video', 'link']),
+        category: z.enum(['geospatial', 'business', 'technical', 'legal', 'marketing']),
+        url: z.string(),
+        fileUrl: z.string().optional(),
+        thumbnailUrl: z.string().optional(),
+        tags: z.array(z.string()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return await db.createResource({
+          ...input,
+          tags: input.tags?.join(','),
+        });
+      }),
   }),
 
   // Admin routes

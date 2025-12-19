@@ -223,6 +223,14 @@ export async function createEventRegistration(registration: InsertEventRegistrat
 }
 
 // Resource queries
+export async function createResource(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.insert(resources).values(data);
+  return data;
+}
+
 export async function getPublicResources() {
   const db = await getDb();
   if (!db) return [];
