@@ -127,7 +127,23 @@ export const appRouter = router({
       }),
   }),
 
-  // Resources
+  // Projects routes
+  projects: router({
+    list: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserProjects(ctx.user.id);
+    }),
+    updateStage: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        stage: z.enum(['idea', 'development', 'testing', 'launch']),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await db.updateProjectStage(input.projectId, input.stage, ctx.user.id);
+        return { success: true };
+      }),
+  }),
+
+  // Resources routes
   resources: router({
     list: publicProcedure.query(async () => {
       return await db.getPublicResources();

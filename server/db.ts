@@ -12,7 +12,8 @@ import {
   eventRegistrations,
   InsertEventRegistration,
   resources,
-  InsertResource
+  InsertResource,
+  projects
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -252,6 +253,31 @@ export async function getAllUsers() {
     .select()
     .from(users)
     .orderBy(desc(users.createdAt));
+}
+
+export async function getUserProjects(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(projects)
+    .where(eq(projects.userId, userId))
+    .orderBy(desc(projects.createdAt));
+}
+
+export async function updateProjectStage(
+  projectId: number,
+  stage: 'idea' | 'development' | 'testing' | 'launch',
+  userId: number
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(projects)
+    .set({ stage, updatedAt: new Date() })
+    .where(eq(projects.id, projectId));
 }
 
 export async function updateUserRole(userId: number, role: 'user' | 'admin') {

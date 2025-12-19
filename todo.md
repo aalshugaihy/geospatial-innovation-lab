@@ -45,3 +45,18 @@
 - [x] Add PDF export for analytics page
 - [x] Create PDF templates for reports
 - [x] Add download button for PDF reports
+
+## Advanced Interactive Features
+- [ ] Set up Socket.io server for real-time chat
+- [ ] Create chat database schema (messages, conversations)
+- [ ] Build chat widget UI component
+- [ ] Implement message history and persistence
+- [ ] Add online/offline status indicators
+- [x] Create resource library page
+- [x] Add resource search and filtering
+- [ ] Implement file upload for PDFs and videos
+- [x] Add resource categories and tags
+- [x] Create Kanban board component
+- [x] Add project tracking database schema
+- [x] Implement drag-and-drop for project cards
+- [x] Add project stages (idea, development, testing, launch)
