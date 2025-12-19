@@ -26,6 +26,7 @@ export default function Navbar() {
         { label: "مسرعات الأعمال", href: "/initiatives/accelerator" },
         { label: "الهاكاثونات", href: "/initiatives/hackathons" },
         { label: "المعسكرات التدريبية", href: "/initiatives/bootcamps" },
+        { label: "GeoSandbox", href: "/initiatives/geosandbox" },
       ],
     },
     { label: "الفعاليات", href: "/events" },
