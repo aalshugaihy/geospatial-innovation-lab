@@ -43,107 +43,110 @@
 }
 
 :root {
-  /* GEOSA Geo-Licensing Portal Colors - Exact Match */
+  /* GEOSA Official Brand Colors from Brand Guide */
   
-  /* Primary - Clean Teal/Turquoise (#00A99D) */
-  --primary: oklch(0.62 0.095 186); /* #00A99D - GEOSA Signature Teal */
-  --primary-foreground: oklch(1 0 0); /* Pure White */
+  /* Primary - Dark Teal (#002937) - neutral/700 */
+  --primary: oklch(0.20 0.04 210); /* #002937 - Deep teal/cyan */
+  --primary-foreground: oklch(1 0 0); /* White */
   
-  /* Accent - Same as Primary for consistency */
-  --accent: oklch(0.62 0.095 186); /* #00A99D */
-  --accent-foreground: oklch(1 0 0); /* White */
+  /* Accent - Bright Green (#46C18F) - primary/500 - For CTAs and buttons */
+  --accent: oklch(0.72 0.12 160); /* #46C18F - Bright green */
+  --accent-foreground: oklch(0.10 0.02 210); /* Dark text on green */
   
-  /* Secondary - Very Light Teal for backgrounds */
-  --secondary: oklch(0.97 0.01 186); /* #E8F7F6 - Light Teal Background */
-  --secondary-foreground: oklch(0.30 0.02 186); /* Dark Teal Text */
+  /* Secondary - Bright Cyan (#14BEC3) - secondary/500 */
+  --secondary: oklch(0.70 0.10 195); /* #14BEC3 - Turquoise cyan */
+  --secondary-foreground: oklch(0.10 0.02 210); /* Dark text */
   
   /* Sidebar Colors */
-  --sidebar-primary: oklch(0.62 0.095 186);
+  --sidebar-primary: oklch(0.72 0.12 160); /* Green */
   --sidebar-primary-foreground: oklch(1 0 0);
   
-  /* Chart Colors - Teal Variations */
-  --chart-1: oklch(0.75 0.08 186);
-  --chart-2: oklch(0.62 0.095 186);
-  --chart-3: oklch(0.52 0.09 186);
-  --chart-4: oklch(0.42 0.08 186);
-  --chart-5: oklch(0.32 0.07 186);
+  /* Chart Colors - GEOSA Palette */
+  --chart-1: oklch(0.72 0.12 160); /* Green #46C18F */
+  --chart-2: oklch(0.70 0.10 195); /* Cyan #14BEC3 */
+  --chart-3: oklch(0.20 0.04 210); /* Dark Teal #002937 */
+  --chart-4: oklch(0.50 0.02 240); /* Gray #485867 */
+  --chart-5: oklch(0.65 0.12 80); /* Gold #c29f25 */
   
-  --radius: 0.5rem; /* Slightly less rounded for professional look */
+  --radius: 0.5rem;
   
-  /* Neutral Colors - Clean and Professional */
-  --background: oklch(1 0 0); /* Pure White #FFFFFF */
-  --foreground: oklch(0.25 0.005 186); /* Dark Gray #2D2D2D */
+  /* Neutral Colors */
+  --background: oklch(1 0 0); /* Pure White */
+  --foreground: oklch(0.38 0.02 240); /* Dark Gray #485867 - comp01 */
   
   --card: oklch(1 0 0); /* White */
-  --card-foreground: oklch(0.25 0.005 186);
+  --card-foreground: oklch(0.38 0.02 240);
   
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.005 186);
+  --popover-foreground: oklch(0.38 0.02 240);
   
-  /* Muted - Light Gray with subtle teal hint */
-  --muted: oklch(0.96 0.003 186); /* #F5F5F5 */
-  --muted-foreground: oklch(0.55 0.005 186); /* #757575 */
+  /* Muted - Light Gray */
+  --muted: oklch(0.97 0.002 240); /* Very light gray */
+  --muted-foreground: oklch(0.55 0.02 240); /* Medium gray #7a8588 - comp04 */
   
-  /* Destructive */
-  --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(0.99 0 0);
+  /* Destructive - Red from palette */
+  --destructive: oklch(0.60 0.24 15); /* #f72844 - comp03 */
+  --destructive-foreground: oklch(1 0 0);
   
   /* Borders - Light Gray */
-  --border: oklch(0.90 0.002 186); /* #E0E0E0 */
-  --input: oklch(0.90 0.002 186);
-  --ring: oklch(0.62 0.095 186); /* Teal ring to match primary */
+  --border: oklch(0.92 0.002 240); /* #E5E7EB */
+  --input: oklch(0.92 0.002 240);
+  --ring: oklch(0.72 0.12 160); /* Green ring for focus */
   
   /* Sidebar */
   --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.25 0.005 186);
-  --sidebar-accent: oklch(0.97 0.01 186);
-  --sidebar-accent-foreground: oklch(0.25 0.005 186);
-  --sidebar-border: oklch(0.90 0.002 186);
-  --sidebar-ring: oklch(0.62 0.095 186);
+  --sidebar-foreground: oklch(0.38 0.02 240);
+  --sidebar-accent: oklch(0.97 0.002 240);
+  --sidebar-accent-foreground: oklch(0.38 0.02 240);
+  --sidebar-border: oklch(0.92 0.002 240);
+  --sidebar-ring: oklch(0.72 0.12 160);
 }
 
 .dark {
-  /* Dark mode with teal accents */
-  --primary: oklch(0.65 0.10 186);
-  --primary-foreground: oklch(0.10 0.005 186);
+  /* Dark mode with GEOSA colors */
+  --primary: oklch(0.25 0.05 210);
+  --primary-foreground: oklch(1 0 0);
   
-  --accent: oklch(0.65 0.10 186);
-  --accent-foreground: oklch(0.10 0.005 186);
+  --accent: oklch(0.75 0.12 160);
+  --accent-foreground: oklch(0.10 0.02 210);
   
-  --background: oklch(0.15 0.005 186);
-  --foreground: oklch(0.95 0.005 186);
+  --secondary: oklch(0.72 0.10 195);
+  --secondary-foreground: oklch(0.10 0.02 210);
   
-  --card: oklch(0.18 0.005 186);
-  --card-foreground: oklch(0.95 0.005 186);
+  --background: oklch(0.15 0.01 240);
+  --foreground: oklch(0.95 0.005 240);
   
-  --popover: oklch(0.18 0.005 186);
-  --popover-foreground: oklch(0.95 0.005 186);
+  --card: oklch(0.18 0.01 240);
+  --card-foreground: oklch(0.95 0.005 240);
   
-  --secondary: oklch(0.22 0.01 186);
-  --secondary-foreground: oklch(0.85 0.01 186);
+  --popover: oklch(0.18 0.01 240);
+  --popover-foreground: oklch(0.95 0.005 240);
   
-  --muted: oklch(0.25 0.01 186);
-  --muted-foreground: oklch(0.70 0.02 186);
+  --muted: oklch(0.25 0.01 240);
+  --muted-foreground: oklch(0.70 0.02 240);
   
-  --destructive: oklch(0.60 0.20 27);
-  --destructive-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.65 0.24 15);
+  --destructive-foreground: oklch(1 0 0);
   
-  --border: oklch(0.30 0.01 186);
-  --input: oklch(0.30 0.01 186);
-  --ring: oklch(0.65 0.10 186);
+  --border: oklch(0.30 0.01 240);
+  --input: oklch(0.30 0.01 240);
+  --ring: oklch(0.75 0.12 160);
   
-  --chart-1: oklch(0.75 0.08 186);
-  --chart-2: oklch(0.65 0.10 186);
-  --chart-3: oklch(0.55 0.09 186);
-  --chart-4: oklch(0.45 0.08 186);
-  --chart-5: oklch(0.35 0.07 186);
+  --chart-1: oklch(0.75 0.12 160);
+  --chart-2: oklch(0.72 0.10 195);
+  --chart-3: oklch(0.30 0.05 210);
+  --chart-4: oklch(0.55 0.02 240);
+  --chart-5: oklch(0.68 0.12 80);
   
-  --sidebar: oklch(0.18 0.005 186);
-  --sidebar-foreground: oklch(0.95 0.005 186);
-  --sidebar-accent: oklch(0.25 0.01 186);
-  --sidebar-accent-foreground: oklch(0.95 0.005 186);
-  --sidebar-border: oklch(0.30 0.01 186);
-  --sidebar-ring: oklch(0.65 0.10 186);
+  --sidebar: oklch(0.18 0.01 240);
+  --sidebar-foreground: oklch(0.95 0.005 240);
+  --sidebar-accent: oklch(0.25 0.01 240);
+  --sidebar-accent-foreground: oklch(0.95 0.005 240);
+  --sidebar-border: oklch(0.30 0.01 240);
+  --sidebar-ring: oklch(0.75 0.12 160);
+  
+  --sidebar-primary: oklch(0.75 0.12 160);
+  --sidebar-primary-foreground: oklch(1 0 0);
 }
 
 @layer base {
@@ -152,7 +155,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Readex Pro', 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -199,30 +202,49 @@
     }
   }
 
-  /* Geospatial Grid Effect - Subtle */
+  /* Geospatial Grid Effect - GEOSA Style */
   .geo-grid {
     background-image: 
-      linear-gradient(rgba(0, 169, 157, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 169, 157, 0.05) 1px, transparent 1px);
+      linear-gradient(rgba(70, 193, 143, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70, 193, 143, 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
-  /* Glow Effects - Teal */
+  /* Glow Effects - GEOSA Green */
   .glow-cyan {
-    box-shadow: 0 4px 20px rgba(0, 169, 157, 0.25);
+    box-shadow: 0 4px 24px rgba(70, 193, 143, 0.3);
   }
 
   .glow-golden {
-    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.25);
+    box-shadow: 0 4px 24px rgba(194, 159, 37, 0.3);
   }
   
-  /* Professional Button Styles */
+  /* GEOSA Primary Button Style */
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:opacity-90 transition-opacity;
+    @apply bg-accent text-accent-foreground hover:opacity-90 transition-all duration-300;
+    box-shadow: 0 2px 12px rgba(70, 193, 143, 0.2);
   }
   
-  /* Card Hover Effect */
+  .btn-primary:hover {
+    box-shadow: 0 4px 20px rgba(70, 193, 143, 0.35);
+  }
+  
+  /* Card Hover Effect - GEOSA Style */
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:border-primary/30;
+    @apply transition-all duration-300 hover:shadow-lg;
+  }
+  
+  .card-hover:hover {
+    border-color: rgba(70, 193, 143, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 41, 55, 0.1);
+  }
+  
+  /* Dark Teal Background - For Hero Sections */
+  .bg-geosa-dark {
+    background-color: #002937;
+    background-image: 
+      linear-gradient(rgba(70, 193, 143, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70, 193, 143, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
   }
 }

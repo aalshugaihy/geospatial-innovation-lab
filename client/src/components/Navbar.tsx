@@ -1,8 +1,10 @@
 /**
- * Design Philosophy: Geospatial Futuristic
- * - Clean navigation with geometric accents and dropdown support
- * - Cyber cyan highlights on hover
- * - Smooth transitions mimicking map navigation
+ * Design: GEOSA Official Brand Identity
+ * Colors: Dark Teal (#002937), Bright Green (#46C18F), Cyan (#14BEC3)
+ * Font: Readex Pro
+ * - Clean navigation with dropdown support
+ * - Green accent highlights on hover
+ * - Professional government-style design
  */
 
 import { Button } from "@/components/ui/button";
