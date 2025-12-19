@@ -90,6 +90,17 @@ export async function upsertUser(user: InsertUser): Promise<void> {
   }
 }
 
+export async function getUserById(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
+
+  const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
 export async function getUserByOpenId(openId: string) {
   const db = await getDb();
   if (!db) {
@@ -132,14 +143,18 @@ export async function updateApplication(id: number, userId: number, data: Partia
     .where(and(eq(applications.id, id), eq(applications.userId, userId)));
 }
 
-export async function getApplicationById(id: number, userId: number) {
+export async function getApplicationById(id: number, userId?: number) {
   const db = await getDb();
   if (!db) return undefined;
+  
+  const conditions = userId 
+    ? and(eq(applications.id, id), eq(applications.userId, userId))
+    : eq(applications.id, id);
   
   const result = await db
     .select()
     .from(applications)
-    .where(and(eq(applications.id, id), eq(applications.userId, userId)))
+    .where(conditions)
     .limit(1);
     
   return result.length > 0 ? result[0] : undefined;
@@ -227,6 +242,26 @@ export async function getAllApplications() {
     .select()
     .from(applications)
     .orderBy(desc(applications.createdAt));
+}
+
+export async function getAllUsers() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(users)
+    .orderBy(desc(users.createdAt));
+}
+
+export async function updateUserRole(userId: number, role: 'user' | 'admin') {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(users)
+    .set({ role, updatedAt: new Date() })
+    .where(eq(users.id, userId));
 }
 
 export async function updateApplicationStatus(

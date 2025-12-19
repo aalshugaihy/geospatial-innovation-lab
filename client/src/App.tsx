@@ -10,6 +10,7 @@ import Apply from "./pages/Apply";
 import ScheduleSession from "./pages/ScheduleSession";
 import Admin from "./pages/Admin";
 import Analytics from "./pages/Analytics";
+import UserManagement from "./pages/UserManagement";
 import About from "./pages/About";
 import Incubator from "./pages/initiatives/Incubator";
 import Accelerator from "./pages/initiatives/Accelerator";
@@ -30,6 +31,7 @@ function Router() {
       <Route path={"/schedule-session"} component={ScheduleSession} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/analytics"} component={Analytics} />
+      <Route path={"/user-management"} component={UserManagement} />
       <Route path={"/about"} component={About} />
       <Route path={"/initiatives/incubator"} component={Incubator} />
       <Route path={"/initiatives/accelerator"} component={Accelerator} />

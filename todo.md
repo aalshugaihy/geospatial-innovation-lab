@@ -33,3 +33,15 @@
 - [x] Create Analytics page with charts
 - [x] Add progress tracking visualizations
 - [x] Implement acceptance rate statistics
+
+## Advanced Features
+- [x] Set up email notification service (SendGrid/Mailgun)
+- [x] Set up SMS notification service (Twilio)
+- [x] Create notification triggers for application status changes
+- [x] Add session reminder notifications
+- [x] Create user management page in admin panel
+- [x] Add user role editing functionality
+- [x] Implement user account activation/deactivation
+- [x] Add PDF export for analytics page
+- [x] Create PDF templates for reports
+- [x] Add download button for PDF reports

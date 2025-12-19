@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import { sendEmail, getApplicationStatusChangeEmail } from "./notifications";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -135,6 +136,24 @@ export const appRouter = router({
 
   // Admin routes
   admin: router({
+    users: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') {
+        throw new Error('Unauthorized');
+      }
+      return await db.getAllUsers();
+    }),
+    updateUserRole: protectedProcedure
+      .input(z.object({
+        userId: z.number(),
+        role: z.enum(['user', 'admin']),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Unauthorized');
+        }
+        await db.updateUserRole(input.userId, input.role);
+        return { success: true };
+      }),
     applications: protectedProcedure.query(async ({ ctx }) => {
       if (ctx.user.role !== 'admin') {
         throw new Error('Unauthorized');
@@ -151,7 +170,33 @@ export const appRouter = router({
         if (ctx.user.role !== 'admin') {
           throw new Error('Unauthorized');
         }
+        
+        // Update application status
         await db.updateApplicationStatus(input.id, input.status, input.reviewNotes);
+        
+        // Get application and user details for notification
+        const application = await db.getApplicationById(input.id);
+        if (application) {
+          const user = await db.getUserById(application.userId);
+          if (user && user.email) {
+            // Send email notification
+            const emailOptions = getApplicationStatusChangeEmail(
+              user.name || 'المستخدم',
+              application.projectName,
+              input.status,
+              input.reviewNotes
+            );
+            emailOptions.to = user.email;
+            
+            try {
+              await sendEmail(emailOptions);
+            } catch (error) {
+              console.error('Failed to send notification email:', error);
+              // Don't fail the mutation if email fails
+            }
+          }
+        }
+        
         return { success: true };
       }),
   }),

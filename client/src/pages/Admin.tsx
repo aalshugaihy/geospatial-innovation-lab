@@ -7,6 +7,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -142,10 +143,19 @@ export default function Admin() {
       
       <main className="flex-1 container py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">لوحة تحكم المسؤولين</h1>
-          <p className="text-muted-foreground">
-            إدارة الطلبات والمستخدمين والجلسات
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">لوحة تحكم المسؤولين</h1>
+              <p className="text-muted-foreground">
+                إدارة الطلبات ومراجعة الحالات
+              </p>
+            </div>
+            <Link href="/user-management">
+              <Button variant="outline">
+                إدارة المستخدمين
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Statistics Cards */}

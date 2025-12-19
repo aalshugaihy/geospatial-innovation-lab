@@ -6,6 +6,8 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -23,7 +25,9 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, Users, Award, Target } from "lucide-react";
+import { TrendingUp, Users, Award, Target, Download } from "lucide-react";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function Analytics() {
   const { user, isAuthenticated, loading } = useAuth({ redirectOnUnauthenticated: true });
@@ -90,18 +94,75 @@ export default function Analytics() {
 
   const COLORS = ['#46C18F', '#14BEC3', '#002937', '#485867', '#94a3b8'];
 
+  const exportToPDF = async () => {
+    const element = document.getElementById('analytics-content');
+    if (!element) return;
+
+    try {
+      // Show loading toast
+      toast.loading('جاري إنشاء ملف PDF...');
+
+      // Create canvas from HTML
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      });
+
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // Add first page
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= 297; // A4 height in mm
+
+      // Add additional pages if needed
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= 297;
+      }
+
+      // Save PDF
+      pdf.save(`analytics-report-${new Date().toISOString().split('T')[0]}.pdf`);
+      toast.success('تم تصدير التقرير بنجاح');
+    } catch (error) {
+      console.error('PDF export error:', error);
+      toast.error('فشل تصدير التقرير');
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
       <main className="flex-1 container py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">التحليلات والإحصائيات</h1>
-          <p className="text-muted-foreground">
-            تتبع تقدمك ومعدلات النجاح في المبادرات
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">التحليلات والإحصائيات</h1>
+              <p className="text-muted-foreground">
+                تتبع تقدمك ومعدلات النجاح في المبادرات
+              </p>
+            </div>
+            <Button onClick={exportToPDF} className="gap-2">
+              <Download className="h-4 w-4" />
+              تصدير PDF
+            </Button>
+          </div>
         </div>
 
+        <div id="analytics-content">
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
@@ -255,6 +316,7 @@ export default function Analytics() {
             </CardContent>
           </Card>
         )}
+        </div>
       </main>
 
       <Footer />
