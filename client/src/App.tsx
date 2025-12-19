@@ -5,11 +5,15 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import About from "./pages/About";
+import Incubator from "./pages/initiatives/Incubator";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/about"} component={About} />
+      <Route path={"/initiatives/incubator"} component={Incubator} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -17,12 +21,6 @@ function Router() {
   );
 }
 
-/**
- * Design Philosophy: Geospatial Futuristic
- * - Light theme as default for better readability
- * - Deep navy, cyber cyan, and golden color scheme
- * - Clean and professional appearance
- */
 function App() {
   return (
     <ErrorBoundary>
