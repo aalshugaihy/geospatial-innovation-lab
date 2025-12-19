@@ -42,92 +42,94 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/**
- * GEOSA-Inspired Color Scheme
- * Primary: Deep Forest Green (#1B5E20)
- * Secondary: Fresh Green (#4CAF50)
- * Accent: Turquoise Cyan (#00BCD4)
- * Golden: Warm Gold (#FFC107)
- */
-
 :root {
-  /* GEOSA Green Theme */
-  --primary: oklch(0.32 0.12 145); /* Deep Forest Green #1B5E20 */
-  --primary-foreground: oklch(0.98 0 0); /* White */
-  --secondary: oklch(0.65 0.15 145); /* Fresh Green #4CAF50 */
-  --secondary-foreground: oklch(0.98 0 0); /* White */
-  --accent: oklch(0.70 0.12 195); /* Turquoise Cyan #00BCD4 */
-  --accent-foreground: oklch(0.98 0 0); /* White */
+  /* GEOSA Brand Colors - Teal/Cyan Theme */
+  --primary: oklch(0.45 0.08 200); /* Deep Teal #006B66 */
+  --primary-foreground: oklch(0.99 0 0); /* White */
+  --sidebar-primary: oklch(0.55 0.10 195); /* Medium Teal */
+  --sidebar-primary-foreground: oklch(0.99 0 0);
   
-  /* Chart colors - Green spectrum */
-  --chart-1: oklch(0.75 0.15 145);
-  --chart-2: oklch(0.65 0.15 145);
-  --chart-3: oklch(0.55 0.15 145);
-  --chart-4: oklch(0.45 0.15 145);
-  --chart-5: oklch(0.35 0.15 145);
+  /* Accent - Bright Teal/Cyan (GEOSA signature color) */
+  --accent: oklch(0.65 0.15 195); /* Bright Teal Cyan #00A99D */
+  --accent-foreground: oklch(0.99 0 0); /* White */
+  
+  /* Secondary - Light Teal */
+  --secondary: oklch(0.92 0.02 195); /* Very Light Teal */
+  --secondary-foreground: oklch(0.25 0.02 200); /* Dark Teal Text */
+  
+  /* Charts - Teal/Cyan Variations */
+  --chart-1: oklch(0.75 0.12 195);
+  --chart-2: oklch(0.65 0.15 195);
+  --chart-3: oklch(0.55 0.12 200);
+  --chart-4: oklch(0.45 0.10 200);
+  --chart-5: oklch(0.35 0.08 205);
   
   --radius: 0.65rem;
+  
+  /* Neutral Colors */
   --background: oklch(1 0 0); /* Pure White */
-  --foreground: oklch(0.20 0.015 145); /* Dark Green-tinted */
+  --foreground: oklch(0.20 0.01 200); /* Very Dark Gray */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.015 145);
+  --card-foreground: oklch(0.20 0.01 200);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.015 145);
-  --muted: oklch(0.96 0.005 145); /* Very Light Green tint */
-  --muted-foreground: oklch(0.50 0.015 145);
+  --popover-foreground: oklch(0.20 0.01 200);
+  
+  /* Muted - Light Gray with slight teal tint */
+  --muted: oklch(0.96 0.005 195);
+  --muted-foreground: oklch(0.50 0.01 200);
+  
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.90 0.008 145); /* Light Green-tinted border */
-  --input: oklch(0.90 0.008 145);
-  --ring: oklch(0.70 0.12 195); /* Turquoise ring */
   
-  /* Sidebar colors */
+  /* Borders - Very light gray */
+  --border: oklch(0.93 0.005 195);
+  --input: oklch(0.93 0.005 195);
+  --ring: oklch(0.65 0.15 195); /* Teal ring */
+  
+  /* Sidebar */
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.20 0.015 145);
-  --sidebar-primary: oklch(0.32 0.12 145);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.96 0.005 145);
-  --sidebar-accent-foreground: oklch(0.20 0.015 145);
-  --sidebar-border: oklch(0.90 0.008 145);
-  --sidebar-ring: oklch(0.70 0.12 195);
+  --sidebar-foreground: oklch(0.20 0.01 200);
+  --sidebar-accent: oklch(0.92 0.02 195);
+  --sidebar-accent-foreground: oklch(0.20 0.01 200);
+  --sidebar-border: oklch(0.93 0.005 195);
+  --sidebar-ring: oklch(0.65 0.15 195);
 }
 
 .dark {
-  --primary: oklch(0.42 0.12 145); /* Lighter Green for dark mode */
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.55 0.15 145);
-  --secondary-foreground: oklch(0.98 0 0);
-  --accent: oklch(0.70 0.12 195);
-  --accent-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.55 0.12 195);
+  --primary-foreground: oklch(0.99 0 0);
+  --sidebar-primary: oklch(0.60 0.12 195);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
   
-  --background: oklch(0.15 0.005 145); /* Dark Green-tinted */
-  --foreground: oklch(0.90 0.005 145);
-  --card: oklch(0.20 0.006 145);
-  --card-foreground: oklch(0.90 0.005 145);
-  --popover: oklch(0.20 0.006 145);
-  --popover-foreground: oklch(0.90 0.005 145);
-  --muted: oklch(0.25 0.006 145);
-  --muted-foreground: oklch(0.65 0.015 145);
+  --accent: oklch(0.70 0.15 195); /* Brighter in dark mode */
+  --accent-foreground: oklch(0.10 0.01 200);
+  
+  --background: oklch(0.15 0.005 200);
+  --foreground: oklch(0.90 0.005 195);
+  --card: oklch(0.20 0.005 200);
+  --card-foreground: oklch(0.90 0.005 195);
+  --popover: oklch(0.20 0.005 200);
+  --popover-foreground: oklch(0.90 0.005 195);
+  --secondary: oklch(0.25 0.01 200);
+  --secondary-foreground: oklch(0.80 0.01 195);
+  --muted: oklch(0.28 0.01 200);
+  --muted-foreground: oklch(0.70 0.02 195);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.70 0.12 195);
-  
-  --chart-1: oklch(0.75 0.15 145);
-  --chart-2: oklch(0.65 0.15 145);
-  --chart-3: oklch(0.55 0.15 145);
-  --chart-4: oklch(0.45 0.15 145);
-  --chart-5: oklch(0.35 0.15 145);
-  
-  --sidebar: oklch(0.20 0.006 145);
-  --sidebar-foreground: oklch(0.90 0.005 145);
-  --sidebar-primary: oklch(0.42 0.12 145);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.25 0.006 145);
-  --sidebar-accent-foreground: oklch(0.90 0.005 145);
+  --ring: oklch(0.70 0.15 195);
+  --chart-1: oklch(0.75 0.12 195);
+  --chart-2: oklch(0.65 0.15 195);
+  --chart-3: oklch(0.55 0.12 200);
+  --chart-4: oklch(0.45 0.10 200);
+  --chart-5: oklch(0.35 0.08 205);
+  --sidebar: oklch(0.20 0.005 200);
+  --sidebar-foreground: oklch(0.90 0.005 195);
+  --sidebar-accent: oklch(0.28 0.01 200);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.70 0.12 195);
+  --sidebar-ring: oklch(0.70 0.15 195);
 }
 
 @layer base {
@@ -151,6 +153,9 @@
 }
 
 @layer components {
+  /**
+   * Custom container utility that centers content and adds responsive padding.
+   */
   .container {
     width: 100%;
     margin-left: auto;
@@ -179,105 +184,20 @@
     }
   }
 
-  /* GEOSA-inspired glow effects */
-  .glow-green {
-    box-shadow: 0 0 20px rgba(27, 94, 32, 0.3);
+  /* Geospatial Grid Effect */
+  .geo-grid {
+    background-image: 
+      linear-gradient(rgba(0, 169, 157, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 169, 157, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
   }
 
+  /* Glow Effects - Teal/Cyan */
   .glow-cyan {
-    box-shadow: 0 0 20px rgba(0, 188, 212, 0.3);
+    box-shadow: 0 0 20px rgba(0, 169, 157, 0.3);
   }
 
   .glow-golden {
     box-shadow: 0 0 20px rgba(255, 193, 7, 0.3);
   }
-
-  /* Geospatial grid pattern */
-  .geo-grid {
-    background-image: 
-      linear-gradient(rgba(0, 188, 212, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 188, 212, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-  }
-
-  /* Map-inspired animations */
-  @keyframes map-pan {
-    0%, 100% {
-      transform: translateX(0) translateY(0);
-    }
-    25% {
-      transform: translateX(-10px) translateY(-10px);
-    }
-    50% {
-      transform: translateX(10px) translateY(-10px);
-    }
-    75% {
-      transform: translateX(-10px) translateY(10px);
-    }
-  }
-
-  .animate-map-pan {
-    animation: map-pan 20s ease-in-out infinite;
-  }
-
-  /* Coordinate marker effect */
-  .coordinate-marker {
-    position: relative;
-  }
-
-  .coordinate-marker::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    background: rgba(0, 188, 212, 0.2);
-    border: 2px solid rgba(0, 188, 212, 0.6);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: translate(-50%, -50%) scale(1.5);
-      opacity: 0.5;
-    }
-  }
-
-  /* Gradient overlays inspired by topographic maps */
-  .topo-gradient {
-    background: linear-gradient(
-      135deg,
-      rgba(27, 94, 32, 0.05) 0%,
-      rgba(76, 175, 80, 0.05) 25%,
-      rgba(0, 188, 212, 0.05) 50%,
-      rgba(76, 175, 80, 0.05) 75%,
-      rgba(27, 94, 32, 0.05) 100%
-    );
-  }
-}
-
-/* Custom scrollbar with GEOSA colors */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: oklch(0.96 0.005 145);
-}
-
-::-webkit-scrollbar-thumb {
-  background: oklch(0.32 0.12 145);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.42 0.12 145);
 }
