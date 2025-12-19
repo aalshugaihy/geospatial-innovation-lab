@@ -20,6 +20,8 @@ export default function Navbar() {
   const navItems = [
     { label: "الرئيسية", href: "/" },
     { label: "عن المعمل", href: "/about" },
+    { label: "لوحة المعلومات", href: "/dashboard" },
+    { label: "التحليلات", href: "/analytics" },
     {
       label: "المبادرات",
       href: "#initiatives",

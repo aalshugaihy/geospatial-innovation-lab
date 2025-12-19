@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Apply from "./pages/Apply";
 import ScheduleSession from "./pages/ScheduleSession";
+import Admin from "./pages/Admin";
+import Analytics from "./pages/Analytics";
 import About from "./pages/About";
 import Incubator from "./pages/initiatives/Incubator";
 import Accelerator from "./pages/initiatives/Accelerator";
@@ -26,6 +28,8 @@ function Router() {
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/apply"} component={Apply} />
       <Route path={"/schedule-session"} component={ScheduleSession} />
+      <Route path={"/admin"} component={Admin} />
+      <Route path={"/analytics"} component={Analytics} />
       <Route path={"/about"} component={About} />
       <Route path={"/initiatives/incubator"} component={Incubator} />
       <Route path={"/initiatives/accelerator"} component={Accelerator} />
