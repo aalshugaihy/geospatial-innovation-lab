@@ -15,8 +15,8 @@ import Events from "./pages/Events";
 import SuccessStories from "./pages/SuccessStories";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
-
 function Router() {
+  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />

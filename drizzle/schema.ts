@@ -1,0 +1,188 @@
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, date } from "drizzle-orm/mysql-core";
+
+/**
+ * Core user table backing auth flow.
+ * Extend this file with additional tables as your product grows.
+ * Columns use camelCase to match both database fields and generated types.
+ */
+export const users = mysqlTable("users", {
+  /**
+   * Surrogate primary key. Auto-incremented numeric value managed by the database.
+   * Use this for relations between tables.
+   */
+  id: int("id").autoincrement().primaryKey(),
+  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
+  openId: varchar("openId", { length: 64 }).notNull().unique(),
+  name: text("name"),
+  email: varchar("email", { length: 320 }),
+  loginMethod: varchar("loginMethod", { length: 64 }),
+  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+  phone: varchar("phone", { length: 20 }),
+  organization: text("organization"),
+  jobTitle: text("jobTitle"),
+  bio: text("bio"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
+});
+
+export type User = typeof users.$inferSelect;
+export type InsertUser = typeof users.$inferInsert;
+
+/**
+ * Applications table - tracks user applications to various initiatives
+ */
+export const applications = mysqlTable("applications", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  initiativeType: mysqlEnum("initiativeType", [
+    "incubator",
+    "accelerator",
+    "hackathon",
+    "bootcamp",
+    "geosandbox"
+  ]).notNull(),
+  projectName: text("projectName").notNull(),
+  projectDescription: text("projectDescription").notNull(),
+  teamSize: int("teamSize"),
+  expectedDuration: varchar("expectedDuration", { length: 50 }),
+  status: mysqlEnum("status", [
+    "draft",
+    "submitted",
+    "under_review",
+    "accepted",
+    "rejected",
+    "in_progress",
+    "completed",
+    "withdrawn"
+  ]).default("draft").notNull(),
+  submittedAt: timestamp("submittedAt"),
+  reviewedAt: timestamp("reviewedAt"),
+  reviewNotes: text("reviewNotes"),
+  startDate: date("startDate"),
+  endDate: date("endDate"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Application = typeof applications.$inferSelect;
+export type InsertApplication = typeof applications.$inferInsert;
+
+/**
+ * Mentoring Sessions table - for scheduling and tracking mentoring sessions
+ */
+export const mentoringSessions = mysqlTable("mentoringSessions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  applicationId: int("applicationId"),
+  mentorName: text("mentorName").notNull(),
+  mentorEmail: varchar("mentorEmail", { length: 320 }),
+  sessionType: mysqlEnum("sessionType", [
+    "consultation",
+    "technical_review",
+    "business_strategy",
+    "pitch_practice",
+    "general_guidance"
+  ]).notNull(),
+  scheduledAt: timestamp("scheduledAt").notNull(),
+  duration: int("duration").notNull(), // in minutes
+  location: text("location"), // physical location or meeting link
+  status: mysqlEnum("status", [
+    "scheduled",
+    "confirmed",
+    "completed",
+    "cancelled",
+    "rescheduled"
+  ]).default("scheduled").notNull(),
+  notes: text("notes"),
+  feedback: text("feedback"),
+  rating: int("rating"), // 1-5 rating
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type MentoringSession = typeof mentoringSessions.$inferSelect;
+export type InsertMentoringSession = typeof mentoringSessions.$inferInsert;
+
+/**
+ * Events table - for managing events and registrations
+ */
+export const events = mysqlTable("events", {
+  id: int("id").autoincrement().primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  eventType: mysqlEnum("eventType", [
+    "hackathon",
+    "workshop",
+    "bootcamp",
+    "networking",
+    "demo_day",
+    "conference"
+  ]).notNull(),
+  startDate: timestamp("startDate").notNull(),
+  endDate: timestamp("endDate").notNull(),
+  location: text("location").notNull(),
+  capacity: int("capacity"),
+  registrationDeadline: timestamp("registrationDeadline"),
+  status: mysqlEnum("status", [
+    "upcoming",
+    "ongoing",
+    "completed",
+    "cancelled"
+  ]).default("upcoming").notNull(),
+  imageUrl: text("imageUrl"),
+  isPublished: boolean("isPublished").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Event = typeof events.$inferSelect;
+export type InsertEvent = typeof events.$inferInsert;
+
+/**
+ * Event Registrations table - tracks user registrations for events
+ */
+export const eventRegistrations = mysqlTable("eventRegistrations", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  eventId: int("eventId").notNull(),
+  status: mysqlEnum("status", [
+    "registered",
+    "confirmed",
+    "attended",
+    "cancelled"
+  ]).default("registered").notNull(),
+  registeredAt: timestamp("registeredAt").defaultNow().notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type EventRegistration = typeof eventRegistrations.$inferSelect;
+export type InsertEventRegistration = typeof eventRegistrations.$inferInsert;
+
+/**
+ * Resources table - for educational resources and materials
+ */
+export const resources = mysqlTable("resources", {
+  id: int("id").autoincrement().primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  resourceType: mysqlEnum("resourceType", [
+    "document",
+    "video",
+    "link",
+    "tool",
+    "template"
+  ]).notNull(),
+  category: varchar("category", { length: 100 }),
+  url: text("url").notNull(),
+  thumbnailUrl: text("thumbnailUrl"),
+  isPublic: boolean("isPublic").default(true).notNull(),
+  downloadCount: int("downloadCount").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Resource = typeof resources.$inferSelect;
+export type InsertResource = typeof resources.$inferInsert;
