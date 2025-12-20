@@ -4,7 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
-import { sendEmail, getApplicationStatusChangeEmail } from "./notifications";
+import { sendEmail, getApplicationStatusChangeEmail, getEventRegistrationConfirmationEmail } from "./notifications";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -120,10 +120,41 @@ export const appRouter = router({
         notes: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        return await db.createEventRegistration({
+        const registration = await db.createEventRegistration({
           userId: ctx.user.id,
           ...input,
         });
+        
+        // Get event details for confirmation email
+        const event = await db.getEventById(input.eventId);
+        
+        if (event && ctx.user.email) {
+          // Send confirmation email
+          const emailContent = getEventRegistrationConfirmationEmail(
+            ctx.user.name || 'المستفيد',
+            event.title,
+            new Date(event.startDate).toLocaleDateString('ar-SA', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            }),
+            new Date(event.startDate).toLocaleTimeString('ar-SA', {
+              hour: '2-digit',
+              minute: '2-digit'
+            }),
+            event.location
+          );
+          
+          await sendEmail({
+            to: ctx.user.email,
+            subject: emailContent.subject,
+            text: '',
+            html: emailContent.html
+          });
+        }
+        
+        return registration;
       }),
   }),
 

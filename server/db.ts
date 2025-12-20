@@ -205,6 +205,19 @@ export async function getPublishedEvents() {
     .orderBy(desc(events.startDate));
 }
 
+export async function getEventById(eventId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db
+    .select()
+    .from(events)
+    .where(eq(events.id, eventId))
+    .limit(1);
+  
+  return result[0] || null;
+}
+
 export async function getUserEventRegistrations(userId: number) {
   const db = await getDb();
   if (!db) return [];

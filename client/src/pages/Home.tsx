@@ -32,6 +32,7 @@ import {
   Quote,
 } from "lucide-react";
 import { Link } from "wouter";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 export default function Home() {
   // The userAuth hooks provides authentication state
@@ -295,20 +296,24 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300">
-              <Button
-                size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 glow-cyan"
-              >
-                احجز جلسة مجانية مدتها 25 دقيقة
-                <ArrowRight className="mr-2 h-5 w-5" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-white/10 hover:bg-white/20 text-white border-white/30 text-lg px-8 py-6 backdrop-blur-sm"
-              >
-                استكشف المبادرات
-              </Button>
+              <Link href="/schedule-session">
+                <Button
+                  size="lg"
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 glow-cyan"
+                >
+                  احجز جلسة مجانية مدتها 25 دقيقة
+                  <ArrowRight className="mr-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <a href="#initiatives">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 text-lg px-8 py-6 backdrop-blur-sm"
+                >
+                  استكشف المبادرات
+                </Button>
+              </a>
             </div>
 
             {/* Platform Screenshot */}
@@ -360,10 +365,12 @@ export default function Home() {
               نتواصل لمعرفة كيف يمكنك أنت أيضًا تنفيذ هذا الأمر في مؤسستك لتحفيز
               الإنتاجية والنمو.
             </p>
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground glow-cyan">
-              احجز جلسة مجانية مع متخصص مدتها 25 دقيقة
-              <ArrowRight className="mr-2" />
-            </Button>
+            <Link href="/schedule-session">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground glow-cyan">
+                احجز جلسة مجانية مع متخصص مدتها 25 دقيقة
+                <ArrowRight className="mr-2" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -496,7 +503,17 @@ export default function Home() {
               >
                 <CardContent className="p-8 text-center">
                   <div className="text-5xl md:text-6xl font-bold text-accent mb-2">
-                    {stat.number}
+                    {stat.number === "10x" ? (
+                      <AnimatedCounter end={10} suffix="x" duration={2.5} />
+                    ) : stat.number === "5x" ? (
+                      <AnimatedCounter end={5} suffix="x" duration={2.5} />
+                    ) : stat.number === "60%" ? (
+                      <AnimatedCounter end={60} suffix="%" duration={2.5} />
+                    ) : stat.number === "8x" ? (
+                      <AnimatedCounter end={8} suffix="x" duration={2.5} />
+                    ) : (
+                      stat.number
+                    )}
                   </div>
                   <h3 className="text-xl font-bold mb-4">{stat.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -594,10 +611,12 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              احجز جلسة مع متخصص مدتها 25 دقيقة
-              <ArrowRight className="mr-2" />
-            </Button>
+            <Link href="/schedule-session">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                احجز جلسة مع متخصص مدتها 25 دقيقة
+                <ArrowRight className="mr-2" />
+              </Button>
+            </Link>
             <p className="text-muted-foreground mt-4">
               اكتشف كيف يمكنك البدء في غضون <span className="font-bold text-accent">أسابيع</span>، وليس أشهر
             </p>

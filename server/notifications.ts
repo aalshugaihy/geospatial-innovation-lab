@@ -247,6 +247,87 @@ export async function sendResourceNotification(resource: any) {
   */
 }
 
+export function getEventRegistrationConfirmationEmail(
+  userName: string,
+  eventTitle: string,
+  eventDate: string,
+  eventTime: string,
+  eventLocation: string
+) {
+  const subject = `تأكيد التسجيل في ${eventTitle}`;
+  
+  const text = `
+مرحباً ${userName},
+
+تم تسجيلك بنجاح في الفعالية التالية:
+
+اسم الفعالية: ${eventTitle}
+التاريخ: ${eventDate}
+الوقت: ${eventTime}
+الموقع: ${eventLocation}
+
+نتطلع لرؤيتك في الفعالية!
+
+مع تحياتنا،
+فريق معمل الابتكار الجيومكاني
+  `.trim();
+
+  const html = `
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; direction: rtl;">
+      <div style="background: linear-gradient(135deg, #002937 0%, #14BEC3 100%); padding: 30px; text-align: center;">
+        <h1 style="color: white; margin: 0;">تأكيد التسجيل في الفعالية</h1>
+      </div>
+      <div style="padding: 30px; background: #f9fafb;">
+        <p style="font-size: 18px; color: #1f2937;">مرحباً ${userName},</p>
+        <p style="font-size: 16px; color: #374151; line-height: 1.6;">
+          تم تسجيلك بنجاح في الفعالية! نحن متحمسون لرؤيتك.
+        </p>
+        <div style="background: white; padding: 25px; border-radius: 12px; margin: 25px 0; border-right: 4px solid #46C18F; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <p style="margin: 0; color: #6b7280; font-size: 14px;">اسم الفعالية</p>
+          <p style="margin: 5px 0 20px 0; color: #1f2937; font-size: 20px; font-weight: bold;">${eventTitle}</p>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+            <div>
+              <p style="margin: 0; color: #6b7280; font-size: 14px;">📅 التاريخ</p>
+              <p style="margin: 5px 0 0 0; color: #1f2937; font-size: 16px; font-weight: 600;">${eventDate}</p>
+            </div>
+            <div>
+              <p style="margin: 0; color: #6b7280; font-size: 14px;">🕐 الوقت</p>
+              <p style="margin: 5px 0 0 0; color: #1f2937; font-size: 16px; font-weight: 600;">${eventTime}</p>
+            </div>
+          </div>
+          
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0; color: #6b7280; font-size: 14px;">📍 الموقع</p>
+            <p style="margin: 5px 0 0 0; color: #1f2937; font-size: 16px;">${eventLocation}</p>
+          </div>
+        </div>
+        
+        <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #86efac;">
+          <p style="margin: 0; color: #166534; font-size: 14px; line-height: 1.6;">
+            ✅ تم إرسال تأكيد التسجيل إلى بريدك الإلكتروني. يرجى الاحتفاظ بهذه الرسالة للرجوع إليها.
+          </p>
+        </div>
+        
+        <p style="font-size: 14px; color: #6b7280; margin-top: 30px; line-height: 1.6;">
+          إذا كان لديك أي استفسارات أو تحتاج إلى إلغاء التسجيل، يرجى التواصل معنا.
+        </p>
+      </div>
+      <div style="background: #1f2937; padding: 20px; text-align: center;">
+        <p style="color: #9ca3af; margin: 0; font-size: 14px;">
+          نتطلع لرؤيتك! 🎉<br>
+          فريق معمل الابتكار الجيومكاني
+        </p>
+      </div>
+    </div>
+  `;
+
+  return {
+    subject,
+    html,
+  };
+}
+
 export function getSessionReminderSMS(
   mentorName: string,
   sessionDate: Date
