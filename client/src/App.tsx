@@ -10,6 +10,8 @@ import Apply from "./pages/Apply";
 import ScheduleSession from "./pages/ScheduleSession";
 import Admin from "./pages/Admin";
 import Analytics from "./pages/Analytics";
+import Search from "./pages/Search";
+import Profile from "./pages/Profile";
 import UserManagement from "./pages/UserManagement";
 import Resources from "./pages/Resources";
 import Projects from "./pages/Projects";
@@ -38,7 +40,9 @@ function Router() {
       <Route path={"/user-management"} component={UserManagement} />
       <Route path={"/resources"} component={Resources} />
       <Route path={"/resource-analytics"} component={ResourceAnalytics} />
-      <Route path={"/upload-resource"} component={UploadResource} />
+       <Route path="/upload-resource" component={UploadResource} />
+      <Route path="/search" component={Search} />
+      <Route path="/profile" component={Profile} />
       <Route path={"/projects"} component={Projects} />
       <Route path={"/about"} component={About} />
       <Route path={"/initiatives/incubator"} component={Incubator} />

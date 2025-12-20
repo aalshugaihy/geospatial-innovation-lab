@@ -272,3 +272,32 @@ export const projectComments = mysqlTable("projectComments", {
 
 export type ProjectComment = typeof projectComments.$inferSelect;
 export type InsertProjectComment = typeof projectComments.$inferInsert;
+
+/**
+ * User Bookmarks table - for saving favorite resources
+ */
+export const userBookmarks = mysqlTable("userBookmarks", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  resourceId: int("resourceId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type UserBookmark = typeof userBookmarks.$inferSelect;
+export type InsertUserBookmark = typeof userBookmarks.$inferInsert;
+
+/**
+ * Achievements table - for gamification badges and achievements
+ */
+export const achievements = mysqlTable("achievements", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  type: varchar("type", { length: 50 }).notNull(), // 'first_project', 'ten_ratings', 'resource_contributor', etc.
+  title: text("title").notNull(),
+  description: text("description"),
+  icon: varchar("icon", { length: 100 }), // Icon name or emoji
+  earnedAt: timestamp("earnedAt").defaultNow().notNull(),
+});
+
+export type Achievement = typeof achievements.$inferSelect;
+export type InsertAchievement = typeof achievements.$inferInsert;

@@ -89,3 +89,26 @@
 - [ ] Create email notification template for new resources
 - [ ] Trigger notifications when admin uploads new resource
 - [ ] Add notification preferences in user settings
+
+## Advanced Search & User Experience
+- [x] Implement full-text search for resources and projects
+- [x] Add multi-criteria filtering (category, type, rating, date)
+- [x] Add sorting options (newest, highest rated, most downloaded)
+- [x] Create search results page with faceted navigation
+- [ ] Add search suggestions and autocomplete
+
+## User Profile & Activity
+- [x] Create user profile page
+- [x] Display user activity statistics
+- [x] Show saved/bookmarked resources
+- [x] List user's projects and contributions
+- [x] Display user achievements and badges
+- [x] Add activity timeline
+
+## Gamification System
+- [x] Design badge/achievement system
+- [x] Create achievement database schema
+- [ ] Implement achievement tracking logic
+- [x] Create badge display components
+- [ ] Add achievement notifications
+- [ ] Create leaderboard page

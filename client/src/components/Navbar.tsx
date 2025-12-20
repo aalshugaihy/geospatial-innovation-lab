@@ -24,6 +24,8 @@ export default function Navbar() {
     { label: "مكتبة الموارد", href: "/resources" },
     { label: "متابعة المشاريع", href: "/projects" },
     { label: "التحليلات", href: "/analytics" },
+    { label: "البحث", href: "/search" },
+    { label: "الملف الشخصي", href: "/profile" },
     {
       label: "المبادرات",
       href: "#initiatives",
