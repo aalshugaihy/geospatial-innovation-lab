@@ -9,6 +9,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
+import NotificationCenter from "@/components/NotificationCenter";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 
@@ -26,6 +27,7 @@ export default function Navbar() {
     { label: "التحليلات", href: "/analytics" },
     { label: "البحث", href: "/search" },
     { label: "الملف الشخصي", href: "/profile" },
+    { label: "لوحة المتصدرين", href: "/leaderboard" },
     {
       label: "المبادرات",
       href: "#initiatives",
@@ -78,6 +80,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6">
+            <NotificationCenter />
             {navItems.map((item) => (
               <div
                 key={item.href}

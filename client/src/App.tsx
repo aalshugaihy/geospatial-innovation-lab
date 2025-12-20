@@ -11,7 +11,8 @@ import ScheduleSession from "./pages/ScheduleSession";
 import Admin from "./pages/Admin";
 import Analytics from "./pages/Analytics";
 import Search from "./pages/Search";
-import Profile from "./pages/Profile";
+import Profile from "@/pages/Profile";
+import Leaderboard from "@/pages/Leaderboard";
 import UserManagement from "./pages/UserManagement";
 import Resources from "./pages/Resources";
 import Projects from "./pages/Projects";
@@ -43,6 +44,7 @@ function Router() {
        <Route path="/upload-resource" component={UploadResource} />
       <Route path="/search" component={Search} />
       <Route path="/profile" component={Profile} />
+      <Route path="/leaderboard" component={Leaderboard} />
       <Route path={"/projects"} component={Projects} />
       <Route path={"/about"} component={About} />
       <Route path={"/initiatives/incubator"} component={Incubator} />

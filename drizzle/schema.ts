@@ -301,3 +301,44 @@ export const achievements = mysqlTable("achievements", {
 
 export type Achievement = typeof achievements.$inferSelect;
 export type InsertAchievement = typeof achievements.$inferInsert;
+
+/**
+ * Notifications table - for user notifications
+ */
+export const notifications = mysqlTable("notifications", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  type: mysqlEnum("type", [
+    "application_status",
+    "session_reminder",
+    "new_resource",
+    "achievement_earned",
+    "project_update",
+    "general"
+  ]).notNull(),
+  title: text("title").notNull(),
+  message: text("message").notNull(),
+  link: text("link"),
+  isRead: boolean("isRead").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Notification = typeof notifications.$inferSelect;
+export type InsertNotification = typeof notifications.$inferInsert;
+
+/**
+ * User Points table - for gamification points tracking
+ */
+export const userPoints = mysqlTable("userPoints", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  totalPoints: int("totalPoints").default(0).notNull(),
+  monthlyPoints: int("monthlyPoints").default(0).notNull(),
+  projectsCount: int("projectsCount").default(0).notNull(),
+  ratingsCount: int("ratingsCount").default(0).notNull(),
+  resourcesContributed: int("resourcesContributed").default(0).notNull(),
+  lastUpdated: timestamp("lastUpdated").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UserPoints = typeof userPoints.$inferSelect;
+export type InsertUserPoints = typeof userPoints.$inferInsert;

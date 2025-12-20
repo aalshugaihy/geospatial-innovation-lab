@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CalendarWidget from "@/components/CalendarWidget";
 import {
   Calendar,
   Clock,
@@ -160,6 +161,11 @@ export default function Dashboard() {
               <p className="text-xs text-muted-foreground">تم إنجازها</p>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Calendar Widget */}
+        <div className="mb-8">
+          <CalendarWidget />
         </div>
 
         {/* Main Content Tabs */}

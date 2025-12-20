@@ -112,3 +112,25 @@
 - [x] Create badge display components
 - [ ] Add achievement notifications
 - [ ] Create leaderboard page
+
+## Leaderboard & Competition
+- [x] Create leaderboard page
+- [x] Implement points calculation system
+- [x] Add monthly/all-time rankings
+- [x] Display top users with avatars and stats
+- [x] Add filtering by category (most projects, most ratings, etc.)
+
+## Real-time Notifications
+- [x] Create notifications database schema
+- [x] Implement notification center component
+- [x] Add unread counter badge
+- [x] Create notification types (application status, sessions, resources)
+- [x] Add mark as read functionality
+- [ ] Implement notification preferences
+
+## Interactive Calendar
+- [x] Add calendar widget to dashboard
+- [x] Display sessions and events on calendar
+- [ ] Implement drag-and-drop rescheduling
+- [x] Add event details popup
+- [ ] Integrate with Google Calendar export
