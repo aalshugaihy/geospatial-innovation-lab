@@ -28,6 +28,7 @@ import Events from "./pages/Events";
 import SuccessStories from "./pages/SuccessStories";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import ChatWidget from "@/components/ChatWidget";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -63,17 +64,16 @@ function Router() {
   );
 }
 
-function App() {
+export default function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="light">
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
-          <Toaster />
           <Router />
+          <ChatWidget />
+          <Toaster />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
 }
-
-export default App;

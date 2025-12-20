@@ -347,3 +347,134 @@ export function getSessionReminderSMS(
     message: `تذكير: لديك جلسة إرشادية مع ${mentorName} يوم ${dateStr} الساعة ${timeStr}. معمل الابتكار الجيومكاني`,
   };
 }
+
+
+export function getContactConfirmationEmail(
+  userName: string,
+  subject: string
+) {
+  const subjectLabels: Record<string, string> = {
+    incubator: 'حاضنات الأعمال',
+    accelerator: 'مسرعات الأعمال',
+    hackathon: 'الهاكاثونات',
+    bootcamp: 'المعسكرات التدريبية',
+    geosandbox: 'GeoSandbox',
+    general: 'استفسار عام',
+  };
+
+  const emailSubject = `شكراً لتواصلك مع معمل الابتكار الجيومكاني`;
+  
+  const html = `
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; direction: rtl;">
+      <div style="background: linear-gradient(135deg, #002937 0%, #14BEC3 100%); padding: 30px; text-align: center;">
+        <h1 style="color: white; margin: 0;">معمل الابتكار الجيومكاني</h1>
+      </div>
+      <div style="padding: 30px; background: #f9fafb;">
+        <p style="font-size: 18px; color: #1f2937;">مرحباً ${userName},</p>
+        <p style="font-size: 16px; color: #374151; line-height: 1.6;">
+          شكراً لتواصلك معنا! تم استلام رسالتك بنجاح.
+        </p>
+        <div style="background: white; padding: 25px; border-radius: 12px; margin: 25px 0; border-right: 4px solid #46C18F; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <p style="margin: 0; color: #6b7280; font-size: 14px;">الموضوع</p>
+          <p style="margin: 5px 0 0 0; color: #1f2937; font-size: 18px; font-weight: bold;">${subjectLabels[subject] || subject}</p>
+        </div>
+        
+        <div style="background: #dbeafe; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #93c5fd;">
+          <p style="margin: 0; color: #1e40af; font-size: 14px; line-height: 1.6;">
+            📧 سيقوم فريقنا بمراجعة رسالتك والرد عليك في أقرب وقت ممكن (عادةً خلال 24-48 ساعة).
+          </p>
+        </div>
+        
+        <p style="font-size: 14px; color: #6b7280; margin-top: 30px; line-height: 1.6;">
+          إذا كان لديك أي استفسارات عاجلة، يمكنك التواصل معنا مباشرة على:<br>
+          📞 الهاتف: +966 11 234 5678<br>
+          📧 البريد: info@geoinnovationlab.sa
+        </p>
+      </div>
+      <div style="background: #1f2937; padding: 20px; text-align: center;">
+        <p style="color: #9ca3af; margin: 0; font-size: 14px;">
+          نقدر تواصلك معنا! 🙏<br>
+          فريق معمل الابتكار الجيومكاني
+        </p>
+      </div>
+    </div>
+  `;
+
+  return {
+    subject: emailSubject,
+    html,
+  };
+}
+
+export function getContactNotificationEmail(
+  userName: string,
+  userEmail: string,
+  userPhone: string,
+  subject: string,
+  message: string
+) {
+  const subjectLabels: Record<string, string> = {
+    incubator: 'حاضنات الأعمال',
+    accelerator: 'مسرعات الأعمال',
+    hackathon: 'الهاكاثونات',
+    bootcamp: 'المعسكرات التدريبية',
+    geosandbox: 'GeoSandbox',
+    general: 'استفسار عام',
+  };
+
+  const emailSubject = `رسالة جديدة من نموذج التواصل - ${subjectLabels[subject] || subject}`;
+  
+  const html = `
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; direction: rtl;">
+      <div style="background: linear-gradient(135deg, #002937 0%, #14BEC3 100%); padding: 30px; text-align: center;">
+        <h1 style="color: white; margin: 0;">رسالة جديدة من نموذج التواصل</h1>
+      </div>
+      <div style="padding: 30px; background: #f9fafb;">
+        <div style="background: white; padding: 25px; border-radius: 12px; margin: 25px 0; border-right: 4px solid #14BEC3; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <h3 style="margin: 0 0 20px 0; color: #1f2937;">معلومات المرسل</h3>
+          
+          <div style="margin-bottom: 15px;">
+            <p style="margin: 0; color: #6b7280; font-size: 14px;">الاسم</p>
+            <p style="margin: 5px 0 0 0; color: #1f2937; font-size: 16px; font-weight: 600;">${userName}</p>
+          </div>
+          
+          <div style="margin-bottom: 15px;">
+            <p style="margin: 0; color: #6b7280; font-size: 14px;">البريد الإلكتروني</p>
+            <p style="margin: 5px 0 0 0; color: #1f2937; font-size: 16px;"><a href="mailto:${userEmail}" style="color: #14BEC3; text-decoration: none;">${userEmail}</a></p>
+          </div>
+          
+          <div style="margin-bottom: 15px;">
+            <p style="margin: 0; color: #6b7280; font-size: 14px;">رقم الجوال</p>
+            <p style="margin: 5px 0 0 0; color: #1f2937; font-size: 16px;"><a href="tel:${userPhone}" style="color: #14BEC3; text-decoration: none;">${userPhone}</a></p>
+          </div>
+          
+          <div style="margin-bottom: 15px;">
+            <p style="margin: 0; color: #6b7280; font-size: 14px;">الموضوع</p>
+            <p style="margin: 5px 0 0 0; color: #1f2937; font-size: 16px; font-weight: 600;">${subjectLabels[subject] || subject}</p>
+          </div>
+        </div>
+        
+        <div style="background: white; padding: 25px; border-radius: 12px; margin: 25px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <h3 style="margin: 0 0 15px 0; color: #1f2937;">الرسالة</h3>
+          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.8; white-space: pre-wrap;">${message}</p>
+        </div>
+        
+        <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #fcd34d;">
+          <p style="margin: 0; color: #92400e; font-size: 14px; line-height: 1.6;">
+            ⚠️ يرجى الرد على هذه الرسالة في أقرب وقت ممكن (خلال 24-48 ساعة).
+          </p>
+        </div>
+      </div>
+      <div style="background: #1f2937; padding: 20px; text-align: center;">
+        <p style="color: #9ca3af; margin: 0; font-size: 14px;">
+          نظام إدارة الرسائل - معمل الابتكار الجيومكاني
+        </p>
+      </div>
+    </div>
+  `;
+
+  return {
+    subject: emailSubject,
+    html,
+  };
+}

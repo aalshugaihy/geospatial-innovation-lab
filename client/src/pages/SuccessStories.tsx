@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ProjectsMap from "@/components/ProjectsMap";
 import {
   Award,
   TrendingUp,
@@ -240,6 +241,21 @@ export default function SuccessStories() {
               تواصل معنا
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Interactive Map Section */}
+      <section className="py-24 bg-background">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">
+              <span className="text-accent">خريطة</span> المشاريع الناجحة
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              اكتشف توزيع الشركات الناشئة الجيومكانية عبر المملكة
+            </p>
+          </div>
+          <ProjectsMap />
         </div>
       </section>
 

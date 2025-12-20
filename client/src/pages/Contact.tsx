@@ -1,9 +1,10 @@
 /**
  * Design Philosophy: GEOSA-Inspired Geospatial Design
- * - Contact page with form and location information
+ * - Contact page with form validation and auto-reply email
  * - Forest green, fresh green, turquoise cyan, golden accents
  */
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
@@ -15,9 +16,104 @@ import {
   Clock,
   Send,
   MessageSquare,
+  Loader2,
+  CheckCircle2,
 } from "lucide-react";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const submitContactMutation = trpc.contact.submit.useMutation({
+    onSuccess: () => {
+      setIsSubmitted(true);
+      toast.success("تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.");
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+      setErrors({});
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => setIsSubmitted(false), 5000);
+    },
+    onError: (error: unknown) => {
+      toast.error("حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.");
+      console.error("Contact form error:", error);
+    },
+  });
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "الاسم الكامل مطلوب";
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "الاسم يجب أن يكون 3 أحرف على الأقل";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "البريد الإلكتروني مطلوب";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "البريد الإلكتروني غير صحيح";
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "رقم الجوال مطلوب";
+    } else if (!/^(\+966|0)?5\d{8}$/.test(formData.phone.replace(/\s/g, ""))) {
+      newErrors.phone = "رقم الجوال غير صحيح (مثال: 0501234567)";
+    }
+
+    if (!formData.subject) {
+      newErrors.subject = "يرجى اختيار الموضوع";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "الرسالة مطلوبة";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "الرسالة يجب أن تكون 10 أحرف على الأقل";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("يرجى تصحيح الأخطاء في النموذج");
+      return;
+    }
+
+    submitContactMutation.mutate(formData);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
   const contactInfo = [
     {
       icon: MapPin,
@@ -138,75 +234,144 @@ export default function Contact() {
 
               <Card className="border-border">
                 <CardContent className="p-8">
-                  <form className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-semibold mb-2">
-                        الاسم الكامل
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="أدخل اسمك الكامل"
-                        className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                      />
+                  {isSubmitted ? (
+                    <div className="text-center py-12">
+                      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <CheckCircle2 className="w-12 h-12 text-green-600" />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3 text-green-600">
+                        تم إرسال رسالتك بنجاح!
+                      </h3>
+                      <p className="text-muted-foreground mb-6">
+                        شكراً لتواصلك معنا. سنرد عليك في أقرب وقت ممكن.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        تم إرسال رسالة تأكيد إلى بريدك الإلكتروني
+                      </p>
                     </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          الاسم الكامل <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          placeholder="أدخل اسمك الكامل"
+                          className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent ${
+                            errors.name ? "border-red-500" : "border-border"
+                          }`}
+                        />
+                        {errors.name && (
+                          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                        )}
+                      </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold mb-2">
-                        البريد الإلكتروني
-                      </label>
-                      <input
-                        type="email"
-                        placeholder="your@email.com"
-                        className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                      />
-                    </div>
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          البريد الإلكتروني <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="your@email.com"
+                          className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent ${
+                            errors.email ? "border-red-500" : "border-border"
+                          }`}
+                        />
+                        {errors.email && (
+                          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        )}
+                      </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold mb-2">
-                        رقم الجوال
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder="+966 XX XXX XXXX"
-                        className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                      />
-                    </div>
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          رقم الجوال <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          placeholder="+966 5X XXX XXXX"
+                          className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent ${
+                            errors.phone ? "border-red-500" : "border-border"
+                          }`}
+                        />
+                        {errors.phone && (
+                          <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                        )}
+                      </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold mb-2">
-                        الموضوع
-                      </label>
-                      <select className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
-                        <option>اختر الموضوع</option>
-                        <option>حاضنات الأعمال</option>
-                        <option>مسرعات الأعمال</option>
-                        <option>الهاكاثونات</option>
-                        <option>المعسكرات التدريبية</option>
-                        <option>GeoSandbox</option>
-                        <option>استفسار عام</option>
-                      </select>
-                    </div>
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          الموضوع <span className="text-red-500">*</span>
+                        </label>
+                        <select
+                          name="subject"
+                          value={formData.subject}
+                          onChange={handleChange}
+                          className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent ${
+                            errors.subject ? "border-red-500" : "border-border"
+                          }`}
+                        >
+                          <option value="">اختر الموضوع</option>
+                          <option value="incubator">حاضنات الأعمال</option>
+                          <option value="accelerator">مسرعات الأعمال</option>
+                          <option value="hackathon">الهاكاثونات</option>
+                          <option value="bootcamp">المعسكرات التدريبية</option>
+                          <option value="geosandbox">GeoSandbox</option>
+                          <option value="general">استفسار عام</option>
+                        </select>
+                        {errors.subject && (
+                          <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
+                        )}
+                      </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold mb-2">
-                        الرسالة
-                      </label>
-                      <textarea
-                        rows={5}
-                        placeholder="اكتب رسالتك هنا..."
-                        className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent resize-none"
-                      ></textarea>
-                    </div>
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          الرسالة <span className="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          rows={5}
+                          placeholder="اكتب رسالتك هنا..."
+                          className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent resize-none ${
+                            errors.message ? "border-red-500" : "border-border"
+                          }`}
+                        ></textarea>
+                        {errors.message && (
+                          <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                        )}
+                      </div>
 
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground glow-cyan"
-                    >
-                      إرسال الرسالة
-                      <Send className="mr-2" />
-                    </Button>
-                  </form>
+                      <Button
+                        type="submit"
+                        size="lg"
+                        disabled={submitContactMutation.isPending}
+                        className="w-full bg-accent hover:bg-accent/90 text-accent-foreground glow-cyan"
+                      >
+                        {submitContactMutation.isPending ? (
+                          <>
+                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            جاري الإرسال...
+                          </>
+                        ) : (
+                          <>
+                            إرسال الرسالة
+                            <Send className="mr-2" />
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  )}
                 </CardContent>
               </Card>
             </div>
@@ -250,130 +415,6 @@ export default function Contact() {
                   </Card>
                 ))}
               </div>
-
-              {/* Social Media */}
-              <Card className="border-accent/50 bg-accent/5 mt-8">
-                <CardContent className="p-8">
-                  <h3 className="text-xl font-bold mb-4">تابعنا</h3>
-                  <p className="text-muted-foreground text-sm mb-6">
-                    تابع آخر أخبارنا وفعالياتنا على وسائل التواصل الاجتماعي
-                  </p>
-                  <div className="flex gap-4">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="w-12 h-12 rounded-full"
-                    >
-                      <span className="text-xl">𝕏</span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="w-12 h-12 rounded-full"
-                    >
-                      <span className="text-xl">in</span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="w-12 h-12 rounded-full"
-                    >
-                      <span className="text-xl">📷</span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="w-12 h-12 rounded-full"
-                    >
-                      <span className="text-xl">▶</span>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-24 bg-background">
-        <div className="container">
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold mb-4">
-              <span className="text-accent">موقعنا</span>
-            </h2>
-            <p className="text-muted-foreground">
-              مقر معمل الابتكار الجيومكاني في الرياض
-            </p>
-          </div>
-
-          <Card className="overflow-hidden border-border">
-            <div className="h-96 bg-muted/30 flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-16 h-16 text-accent mx-auto mb-4" />
-                <p className="text-muted-foreground">
-                  الخريطة التفاعلية - يمكن دمج خريطة Google Maps هنا
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-24 bg-muted/30">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">
-                الأسئلة <span className="text-accent">الشائعة</span>
-              </h2>
-              <p className="text-muted-foreground">
-                إجابات سريعة على الأسئلة الأكثر شيوعاً
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {[
-                {
-                  q: "كيف يمكنني التقديم على برنامج حاضنة الأعمال؟",
-                  a: "يمكنك التقديم من خلال صفحة حاضنات الأعمال وملء نموذج التقديم الإلكتروني. سيتم مراجعة طلبك خلال 2-3 أسابيع.",
-                },
-                {
-                  q: "هل البرامج مجانية؟",
-                  a: "نعم، جميع برامجنا مجانية بالكامل وتشمل الدعم الفني والإرشاد والبنية التحتية.",
-                },
-                {
-                  q: "ما هي متطلبات الانضمام؟",
-                  a: "تختلف المتطلبات حسب البرنامج، لكن بشكل عام نبحث عن أفكار مبتكرة في القطاع الجيومكاني وفريق ملتزم.",
-                },
-                {
-                  q: "كم تستغرق مدة البرامج؟",
-                  a: "تتراوح المدة من 4 أسابيع للمعسكرات التدريبية إلى 12 شهر لحاضنة الأعمال.",
-                },
-              ].map((faq, index) => (
-                <Card
-                  key={index}
-                  className="border-border hover:border-accent transition-all duration-300"
-                >
-                  <CardContent className="p-6">
-                    <h3 className="font-bold mb-2">{faq.q}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {faq.a}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="text-center mt-8">
-              <p className="text-muted-foreground mb-4">لم تجد إجابة لسؤالك؟</p>
-              <Button
-                variant="outline"
-                className="border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-              >
-                تواصل معنا مباشرة
-              </Button>
             </div>
           </div>
         </div>

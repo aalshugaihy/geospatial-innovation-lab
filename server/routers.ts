@@ -4,7 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
-import { sendEmail, getApplicationStatusChangeEmail, getEventRegistrationConfirmationEmail } from "./notifications";
+import { sendEmail, getApplicationStatusChangeEmail, getEventRegistrationConfirmationEmail, getContactConfirmationEmail, getContactNotificationEmail } from "./notifications";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -170,6 +170,48 @@ export const appRouter = router({
       }))
       .mutation(async ({ ctx, input }) => {
         await db.updateProjectStage(input.projectId, input.stage, ctx.user.id);
+        return { success: true };
+      }),
+  }),
+
+  // Contact form
+  contact: router({
+    submit: publicProcedure
+      .input(z.object({
+        name: z.string().min(3),
+        email: z.string().email(),
+        phone: z.string().min(10),
+        subject: z.string().min(1),
+        message: z.string().min(10),
+      }))
+      .mutation(async ({ input }) => {
+        // Send confirmation email to user
+        const userEmailContent = getContactConfirmationEmail(
+          input.name,
+          input.subject
+        );
+        
+        if (input.email) {
+          await sendEmail({
+            to: input.email,
+            subject: userEmailContent.subject,
+            text: '',
+            html: userEmailContent.html
+          });
+        }
+        
+        // Send notification email to admin
+        const adminEmailContent = getContactNotificationEmail(
+          input.name,
+          input.email,
+          input.phone,
+          input.subject,
+          input.message
+        );
+        
+        // In production, send to actual admin email
+        console.log('[Admin Notification]', adminEmailContent);
+        
         return { success: true };
       }),
   }),
