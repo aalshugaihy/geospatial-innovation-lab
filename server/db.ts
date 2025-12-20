@@ -13,7 +13,9 @@ import {
   InsertEventRegistration,
   resources,
   InsertResource,
-  projects
+  projects,
+  resourceRatings,
+  projectComments
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -223,6 +225,58 @@ export async function createEventRegistration(registration: InsertEventRegistrat
 }
 
 // Resource queries
+export async function rateResource(data: { resourceId: number; userId: number; rating: number; comment?: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Check if user already rated this resource
+  const existing = await db
+    .select()
+    .from(resourceRatings)
+    .where(and(
+      eq(resourceRatings.resourceId, data.resourceId),
+      eq(resourceRatings.userId, data.userId)
+    ));
+  
+  if (existing.length > 0) {
+    // Update existing rating
+    await db
+      .update(resourceRatings)
+      .set({ rating: data.rating, review: data.comment })
+      .where(eq(resourceRatings.id, existing[0].id));
+  } else {
+    // Create new rating
+    await db.insert(resourceRatings).values({
+      resourceId: data.resourceId,
+      userId: data.userId,
+      rating: data.rating,
+      review: data.comment,
+    });
+  }
+  
+  return { success: true };
+}
+
+export async function getResourceRatings(resourceId: number) {
+  const db = await getDb();
+  if (!db) return { average: 0, count: 0, ratings: [] };
+  
+  const ratings = await db
+    .select()
+    .from(resourceRatings)
+    .where(eq(resourceRatings.resourceId, resourceId));
+  
+  const average = ratings.length > 0
+    ? ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length
+    : 0;
+  
+  return {
+    average,
+    count: ratings.length,
+    ratings,
+  };
+}
+
 export async function createResource(data: any) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");

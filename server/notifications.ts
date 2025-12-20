@@ -230,6 +230,23 @@ export function getSessionReminderEmail(
   };
 }
 
+export async function sendResourceNotification(resource: any) {
+  // In a real implementation, this would:
+  // 1. Query users who have subscribed to this resource category
+  // 2. Send email notifications to those users
+  // For now, we'll just log it
+  console.log(`[Notification] New resource published: ${resource.title} in category ${resource.category}`);
+  
+  // TODO: Implement actual notification logic
+  /*
+  const interestedUsers = await db.getUsersByCategory(resource.category);
+  for (const user of interestedUsers) {
+    const email = getNewResourceEmail(user.name, resource.title, resource.category);
+    await sendEmail({ ...email, to: user.email });
+  }
+  */
+}
+
 export function getSessionReminderSMS(
   mentorName: string,
   sessionDate: Date

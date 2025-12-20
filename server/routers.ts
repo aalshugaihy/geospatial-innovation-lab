@@ -148,6 +148,34 @@ export const appRouter = router({
     list: publicProcedure.query(async () => {
       return await db.getPublicResources();
     }),
+    upload: protectedProcedure
+      .input(z.object({
+        fileData: z.string(), // base64 data URL
+        fileName: z.string(),
+        resourceType: z.enum(['document', 'video']),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { uploadFile, parseDataUrl, validateFileType, validateFileSize, ALLOWED_DOCUMENT_TYPES, ALLOWED_VIDEO_TYPES, MAX_DOCUMENT_SIZE, MAX_VIDEO_SIZE } = await import('./upload-helper.js');
+        
+        // Parse data URL
+        const { buffer, contentType } = parseDataUrl(input.fileData);
+        
+        // Validate file type
+        const allowedTypes = input.resourceType === 'document' ? ALLOWED_DOCUMENT_TYPES : ALLOWED_VIDEO_TYPES;
+        if (!validateFileType(contentType, allowedTypes)) {
+          throw new Error('نوع الملف غير مدعوم');
+        }
+        
+        // Validate file size
+        const maxSize = input.resourceType === 'document' ? MAX_DOCUMENT_SIZE : MAX_VIDEO_SIZE;
+        if (!validateFileSize(buffer.length, maxSize)) {
+          throw new Error('حجم الملف كبير جداً');
+        }
+        
+        // Upload to S3
+        const result = await uploadFile(buffer, input.fileName, contentType);
+        return result;
+      }),
     create: protectedProcedure
       .input(z.object({
         title: z.string(),
@@ -160,10 +188,37 @@ export const appRouter = router({
         tags: z.array(z.string()).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        return await db.createResource({
+        const resource = await db.createResource({
           ...input,
           tags: input.tags?.join(','),
         });
+        
+        // Send notifications to users interested in this category
+        const { sendResourceNotification } = await import('./notifications.js');
+        await sendResourceNotification(resource);
+        
+        return resource;
+      }),
+    rate: protectedProcedure
+      .input(z.object({
+        resourceId: z.number(),
+        rating: z.number().min(1).max(5),
+        comment: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const db = await import('./db.js');
+        return await db.rateResource({
+          resourceId: input.resourceId,
+          userId: ctx.user.id,
+          rating: input.rating,
+          comment: input.comment,
+        });
+      }),
+    getRatings: publicProcedure
+      .input(z.object({ resourceId: z.number() }))
+      .query(async ({ input }) => {
+        const db = await import('./db.js');
+        return await db.getResourceRatings(input.resourceId);
       }),
   }),
 

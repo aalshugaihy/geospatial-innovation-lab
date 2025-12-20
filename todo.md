@@ -74,3 +74,18 @@
 - [ ] Add comment system for resources and projects
 - [ ] Display average ratings
 - [ ] Add user review submission interface
+
+## S3 Integration & Advanced Features
+- [x] Set up S3 storage helpers using built-in storage functions
+- [x] Update UploadResource to use storagePut for file uploads
+- [x] Add file upload progress tracking
+- [x] Implement star rating component (1-5 stars)
+- [x] Add rating submission for resources
+- [ ] Add rating submission for projects
+- [x] Display average ratings on resource/project cards
+- [ ] Create comment submission interface
+- [ ] Display comments list with user info
+- [ ] Add user preference system for resource categories
+- [ ] Create email notification template for new resources
+- [ ] Trigger notifications when admin uploads new resource
+- [ ] Add notification preferences in user settings

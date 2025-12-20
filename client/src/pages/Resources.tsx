@@ -20,6 +20,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Search, FileText, Video, Link as LinkIcon, Download, Upload, Filter, BarChart3 } from "lucide-react";
 import { Link } from "wouter";
+import { RatingDisplay } from "@/components/StarRating";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -192,14 +193,16 @@ export default function Resources() {
                   )}
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-muted-foreground">
-                      {resource.downloadCount || 0} تحميل
-                    </div>
-                    <Button
-                      size="sm"
-                      onClick={() => handleDownload(resource)}
-                      className="gap-2"
+                  <div className="space-y-3">
+                    <RatingDisplay rating={resource.averageRating || 0} count={resource.ratingCount || 0} />
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm text-muted-foreground">
+                        {resource.downloadCount || 0} تحميل
+                      </div>
+                      <Button
+                        size="sm"
+                        onClick={() => handleDownload(resource)}
+                        className="gap-2"
                     >
                       {resource.resourceType === 'link' ? (
                         <>
@@ -213,6 +216,7 @@ export default function Resources() {
                         </>
                       )}
                     </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

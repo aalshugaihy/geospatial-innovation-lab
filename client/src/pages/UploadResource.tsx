@@ -45,6 +45,18 @@ export default function UploadResource() {
     },
   });
 
+  const uploadMutation = trpc.resources.upload.useMutation({
+    onSuccess: (data) => {
+      setFormData({ ...formData, fileUrl: data.url });
+      setUploading(false);
+      toast.success("تم رفع الملف بنجاح!");
+    },
+    onError: (error) => {
+      setUploading(false);
+      toast.error("فشل رفع الملف: " + error.message);
+    },
+  });
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -65,9 +77,10 @@ export default function UploadResource() {
       return;
     }
 
-    // Validate file size (max 50MB)
-    if (file.size > 50 * 1024 * 1024) {
-      toast.error("حجم الملف كبير جداً. الحد الأقصى 50 ميجابايت.");
+    // Validate file size (max 50MB for documents, 100MB for videos)
+    const maxSize = formData.resourceType === 'document' ? 50 * 1024 * 1024 : 100 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error(`حجم الملف كبير جداً. الحد الأقصى ${maxSize / (1024 * 1024)} ميجابايت.`);
       return;
     }
 
@@ -78,15 +91,17 @@ export default function UploadResource() {
     };
     reader.readAsDataURL(file);
 
-    // In a real implementation, upload to S3 here
-    // For now, we'll simulate the upload
+    // Upload to S3 via tRPC
     setUploading(true);
-    setTimeout(() => {
-      const mockUrl = `https://storage.example.com/${file.name}`;
-      setFormData({ ...formData, fileUrl: mockUrl });
-      setUploading(false);
-      toast.success("تم رفع الملف بنجاح!");
-    }, 2000);
+    const dataReader = new FileReader();
+    dataReader.onloadend = () => {
+      uploadMutation.mutate({
+        fileData: dataReader.result as string,
+        fileName: file.name,
+        resourceType: formData.resourceType as 'document' | 'video',
+      });
+    };
+    dataReader.readAsDataURL(file);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
