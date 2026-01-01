@@ -91,9 +91,9 @@ export default function Navbar() {
                       <div className="absolute top-full right-0 mt-2 w-56 bg-background/95 backdrop-blur-lg border border-border rounded-lg shadow-xl py-2 animate-in fade-in slide-in-from-top-2 duration-200">
                         {item.submenu.map((subItem) => (
                           <Link key={subItem.href} href={subItem.href}>
-                            <a className="block px-4 py-3 text-foreground hover:text-accent hover:bg-accent/5 transition-colors duration-200">
+                            <span className="block px-4 py-3 text-foreground hover:text-accent hover:bg-accent/5 transition-colors duration-200 cursor-pointer">
                               {subItem.label}
-                            </a>
+                            </span>
                           </Link>
                         ))}
                       </div>
@@ -109,14 +109,14 @@ export default function Navbar() {
                   </a>
                 ) : (
                   <Link href={item.href}>
-                    <a
-                      className={`text-foreground hover:text-accent transition-colors duration-300 font-medium relative group ${
+                    <span
+                      className={`text-foreground hover:text-accent transition-colors duration-300 font-medium relative group cursor-pointer inline-block ${
                         location === item.href ? "text-accent" : ""
                       }`}
                     >
                       {item.label}
                       <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                    </a>
+                    </span>
                   </Link>
                 )}
               </div>
@@ -162,12 +162,12 @@ export default function Navbar() {
                         <div className="pr-4 space-y-2 animate-in slide-in-from-top-2 duration-200">
                           {item.submenu.map((subItem) => (
                             <Link key={subItem.href} href={subItem.href}>
-                              <a
+                              <span
                                 onClick={() => setIsOpen(false)}
-                                className="block text-muted-foreground hover:text-accent transition-colors duration-200 py-2"
+                                className="block text-muted-foreground hover:text-accent transition-colors duration-200 py-2 cursor-pointer"
                               >
                                 {subItem.label}
-                              </a>
+                              </span>
                             </Link>
                           ))}
                         </div>
@@ -183,12 +183,12 @@ export default function Navbar() {
                     </a>
                   ) : (
                     <Link href={item.href}>
-                      <a
+                      <span
                         onClick={() => setIsOpen(false)}
-                        className="text-foreground hover:text-accent transition-colors duration-300 font-medium py-3 block"
+                        className="text-foreground hover:text-accent transition-colors duration-300 font-medium py-3 block cursor-pointer"
                       >
                         {item.label}
-                      </a>
+                      </span>
                     </Link>
                   )}
                 </div>
