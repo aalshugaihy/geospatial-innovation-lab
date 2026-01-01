@@ -361,6 +361,63 @@ export const appRouter = router({
         return { success: true };
       }),
   }),
+
+  // Chat routes for mentor dashboard
+  chat: router({
+    getConversations: protectedProcedure.query(async ({ ctx }) => {
+      // Mock data for now - in production, fetch from database
+      return [
+        {
+          id: 1,
+          userId: 2,
+          userName: 'أحمد السعيد',
+          userEmail: 'ahmed@example.com',
+          lastMessage: 'شكراً على المساعدة في المشروع',
+          lastMessageAt: new Date(),
+          unreadCount: 2,
+          status: 'active' as const,
+          isOnline: true,
+        },
+        {
+          id: 2,
+          userId: 3,
+          userName: 'نورة المطيري',
+          userEmail: 'noura@example.com',
+          lastMessage: 'متى يمكنني البدء في البرنامج؟',
+          lastMessageAt: new Date(Date.now() - 3600000),
+          unreadCount: 0,
+          status: 'active' as const,
+          isOnline: false,
+        },
+        {
+          id: 3,
+          userId: 4,
+          userName: 'خالد الدوسري',
+          userEmail: 'khaled@example.com',
+          lastMessage: 'هل يمكن مراجعة خطة العمل؟',
+          lastMessageAt: new Date(Date.now() - 7200000),
+          unreadCount: 1,
+          status: 'active' as const,
+          isOnline: true,
+        },
+      ];
+    }),
+    getDailyStats: protectedProcedure.query(async ({ ctx }) => {
+      // Mock data for now - in production, calculate from database
+      const stats = [];
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        stats.push({
+          date: date.toISOString(),
+          messageCount: Math.floor(Math.random() * 50) + 10,
+          conversationCount: Math.floor(Math.random() * 10) + 3,
+          responseTime: Math.floor(Math.random() * 30) + 5,
+        });
+      }
+      return stats;
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

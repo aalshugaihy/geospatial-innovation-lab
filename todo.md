@@ -208,3 +208,39 @@
 - [x] Add online/offline status
 - [ ] Create file sharing in chat
 - [ ] Write tests for chat system
+
+## Mentor Dashboard
+- [x] Create mentor dashboard page
+- [x] Display list of active conversations
+- [x] Show online/offline status of users
+- [x] Add conversation search and filtering
+- [x] Display daily message statistics
+- [x] Add conversation analytics (response time, message count)
+- [ ] Create conversation assignment system
+- [ ] Add bulk actions for conversations
+- [ ] Implement conversation priority levels
+- [ ] Add mentor performance metrics
+
+## Push Notifications System
+- [x] Set up service worker for push notifications
+- [x] Create notification permission request UI
+- [ ] Implement notification subscription backend
+- [ ] Store notification tokens in database
+- [ ] Create notification sending service
+- [x] Add notification for new messages
+- [x] Add notification for event reminders
+- [x] Add notification for application status updates
+- [x] Create notification preferences page
+- [ ] Test notifications across browsers
+
+## Interactive Map Enhancements
+- [x] Add program filter (incubator, accelerator, etc.)
+- [x] Add year filter for projects
+- [x] Add city/region filter
+- [x] Implement heatmap visualization
+- [x] Add cluster markers for multiple projects
+- [x] Create map legend with filters
+- [x] Add project density visualization
+- [x] Implement map animation on filter change
+- [ ] Add export map data functionality
+- [x] Create map analytics dashboard

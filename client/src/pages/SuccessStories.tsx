@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ProjectsMap from "@/components/ProjectsMap";
+import ProjectsMapEnhanced from "@/components/ProjectsMapEnhanced";
 import {
   Award,
   TrendingUp,
@@ -255,7 +255,7 @@ export default function SuccessStories() {
               اكتشف توزيع الشركات الناشئة الجيومكانية عبر المملكة
             </p>
           </div>
-          <ProjectsMap />
+          <ProjectsMapEnhanced />
         </div>
       </section>
 

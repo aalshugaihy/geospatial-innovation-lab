@@ -29,6 +29,8 @@ import SuccessStories from "./pages/SuccessStories";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import ChatWidget from "@/components/ChatWidget";
+import MentorDashboard from "./pages/MentorDashboard";
+import NotificationSettingsPage from "./pages/NotificationSettingsPage";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -57,6 +59,8 @@ function Router() {
       <Route path={"/success-stories"} component={SuccessStories} />
       <Route path={"/blog"} component={Blog} />
       <Route path={"/contact"} component={Contact} />
+      <Route path={"/mentor-dashboard"} component={MentorDashboard} />
+      <Route path={"/notification-settings"} component={NotificationSettingsPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
