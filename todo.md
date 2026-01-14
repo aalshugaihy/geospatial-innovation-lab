@@ -244,3 +244,13 @@
 - [x] Implement map animation on filter change
 - [ ] Add export map data functionality
 - [x] Create map analytics dashboard
+
+## Typography & Design Improvements
+- [x] Analyze current font sizes and spacing
+- [x] Improve global typography system in index.css
+- [x] Enhance heading hierarchy (h1, h2, h3, h4)
+- [x] Improve body text readability
+- [x] Optimize button and link text sizes
+- [x] Improve spacing and line-height
+- [x] Ensure consistency across all pages
+- [x] Test typography on different screen sizes

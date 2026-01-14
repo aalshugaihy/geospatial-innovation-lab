@@ -156,6 +156,68 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Readex Pro', 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+  }
+  
+  /* Enhanced Typography Hierarchy */
+  h1 {
+    @apply text-5xl md:text-6xl lg:text-7xl font-bold;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  
+  h2 {
+    @apply text-4xl md:text-5xl font-bold;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+  }
+  
+  h3 {
+    @apply text-3xl md:text-4xl font-bold;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+  
+  h4 {
+    @apply text-2xl md:text-3xl font-semibold;
+    line-height: 1.4;
+    margin-bottom: 0.875rem;
+  }
+  
+  h5 {
+    @apply text-xl md:text-2xl font-semibold;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+  
+  h6 {
+    @apply text-lg md:text-xl font-semibold;
+    line-height: 1.5;
+    margin-bottom: 0.625rem;
+  }
+  
+  p {
+    @apply text-base md:text-lg;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  
+  /* Lead text for introductions */
+  .lead {
+    @apply text-lg md:text-xl lg:text-2xl;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+  
+  /* Small text */
+  .text-small {
+    @apply text-sm md:text-base;
+    line-height: 1.6;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -167,6 +229,18 @@
   input[type="checkbox"]:not(:disabled),
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
+  }
+  
+  /* Enhanced button typography */
+  button, [role="button"], [type="button"], [type="submit"] {
+    @apply text-base md:text-lg font-medium;
+    letter-spacing: 0.01em;
+  }
+  
+  /* Link styles */
+  a {
+    @apply text-base md:text-lg;
+    transition: color 0.2s ease;
   }
 }
 
