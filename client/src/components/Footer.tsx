@@ -33,22 +33,22 @@ export default function Footer() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold">معمل الابتكار الجيومكاني</h3>
+              <h3 className="text-xl font-bold">معمل الابتكار الجيومكاني</h3>
             </div>
-            <p className="text-primary-foreground/80 text-sm leading-relaxed">
+            <p className="text-primary-foreground/80 text-base leading-relaxed">
               منصة رائدة لتمكين الابتكار في القطاع الجيومكاني من خلال حاضنات الأعمال، المسرعات، الهاكاثونات والمعسكرات التدريبية.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold mb-6 text-accent">روابط سريعة</h4>
+            <h4 className="text-xl font-bold mb-6 text-accent">روابط سريعة</h4>
             <ul className="space-y-3">
               {["عن المعمل", "مبادراتنا", "الفعاليات", "الشركاء", "المدونة"].map((link) => (
                 <li key={link}>
                   <a
                     href="#"
-                    className="text-primary-foreground/80 hover:text-accent transition-colors duration-300 text-sm"
+                    className="text-primary-foreground/80 hover:text-accent transition-colors duration-300 text-base font-medium"
                   >
                     {link}
                   </a>
@@ -59,7 +59,7 @@ export default function Footer() {
 
           {/* Initiatives */}
           <div>
-            <h4 className="text-lg font-bold mb-6 text-secondary">مبادراتنا</h4>
+            <h4 className="text-xl font-bold mb-6 text-secondary">مبادراتنا</h4>
             <ul className="space-y-3">
               {[
                 "حاضنات الأعمال",
@@ -71,7 +71,7 @@ export default function Footer() {
                 <li key={initiative}>
                   <a
                     href="#"
-                    className="text-primary-foreground/80 hover:text-secondary transition-colors duration-300 text-sm"
+                    className="text-primary-foreground/80 hover:text-secondary transition-colors duration-300 text-base font-medium"
                   >
                     {initiative}
                   </a>
@@ -82,11 +82,11 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-bold mb-6 text-accent">تواصل معنا</h4>
+            <h4 className="text-xl font-bold mb-6 text-accent">تواصل معنا</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                <span className="text-primary-foreground/80 text-sm">
+                <span className="text-primary-foreground/80 text-base">
                   الرياض، المملكة العربية السعودية
                 </span>
               </li>
@@ -94,7 +94,7 @@ export default function Footer() {
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <a
                   href="mailto:info@geolab.sa"
-                  className="text-primary-foreground/80 hover:text-accent transition-colors text-sm"
+                  className="text-primary-foreground/80 hover:text-accent transition-colors text-base"
                 >
                   info@geolab.sa
                 </a>
@@ -103,7 +103,7 @@ export default function Footer() {
                 <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                 <a
                   href="tel:+966123456789"
-                  className="text-primary-foreground/80 hover:text-accent transition-colors text-sm"
+                  className="text-primary-foreground/80 hover:text-accent transition-colors text-base"
                 >
                   +966 12 345 6789
                 </a>

@@ -58,10 +58,10 @@ export default function Navbar() {
                 className="h-14 w-auto"
               />
               <div className="hidden md:block">
-                <h1 className="text-xl font-bold text-foreground">
+                <h1 className="text-2xl font-bold text-foreground">
                   معمل الابتكار الجيومكاني
                 </h1>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   Geospatial Innovation Lab
                 </p>
               </div>
@@ -82,7 +82,7 @@ export default function Navbar() {
               >
                 {item.submenu ? (
                   <>
-                    <button className="text-foreground hover:text-accent transition-colors duration-300 font-medium flex items-center gap-1 relative group">
+                    <button className="text-lg text-foreground hover:text-accent transition-colors duration-300 font-semibold flex items-center gap-1 relative group">
                       {item.label}
                       <ChevronDown className="w-4 h-4" />
                       <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
@@ -91,7 +91,7 @@ export default function Navbar() {
                       <div className="absolute top-full right-0 mt-2 w-56 bg-background/95 backdrop-blur-lg border border-border rounded-lg shadow-xl py-2 animate-in fade-in slide-in-from-top-2 duration-200">
                         {item.submenu.map((subItem) => (
                           <Link key={subItem.href} href={subItem.href}>
-                            <span className="block px-4 py-3 text-foreground hover:text-accent hover:bg-accent/5 transition-colors duration-200 cursor-pointer">
+                            <span className="block px-4 py-3 text-base text-foreground hover:text-accent hover:bg-accent/5 transition-colors duration-200 cursor-pointer font-medium">
                               {subItem.label}
                             </span>
                           </Link>
@@ -102,7 +102,7 @@ export default function Navbar() {
                 ) : item.href.startsWith("#") ? (
                   <a
                     href={item.href}
-                    className="text-foreground hover:text-accent transition-colors duration-300 font-medium relative group"
+                    className="text-lg text-foreground hover:text-accent transition-colors duration-300 font-semibold relative group"
                   >
                     {item.label}
                     <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
@@ -110,7 +110,7 @@ export default function Navbar() {
                 ) : (
                   <Link href={item.href}>
                     <span
-                      className={`text-foreground hover:text-accent transition-colors duration-300 font-medium relative group cursor-pointer inline-block ${
+                      className={`text-lg text-foreground hover:text-accent transition-colors duration-300 font-semibold relative group cursor-pointer inline-block ${
                         location === item.href ? "text-accent" : ""
                       }`}
                     >
@@ -121,7 +121,7 @@ export default function Navbar() {
                 )}
               </div>
             ))}
-            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground glow-cyan">
+            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground glow-cyan text-lg font-semibold px-6 py-3">
               ابدأ الآن
             </Button>
           </div>
@@ -149,7 +149,7 @@ export default function Navbar() {
                             openDropdown === item.label ? null : item.label
                           )
                         }
-                        className="text-foreground hover:text-accent transition-colors duration-300 font-medium py-3 flex items-center justify-between w-full"
+                        className="text-lg text-foreground hover:text-accent transition-colors duration-300 font-semibold py-3 flex items-center justify-between w-full"
                       >
                         {item.label}
                         <ChevronDown
@@ -164,7 +164,7 @@ export default function Navbar() {
                             <Link key={subItem.href} href={subItem.href}>
                               <span
                                 onClick={() => setIsOpen(false)}
-                                className="block text-muted-foreground hover:text-accent transition-colors duration-200 py-2 cursor-pointer"
+                                className="block text-base text-muted-foreground hover:text-accent transition-colors duration-200 py-2 cursor-pointer font-medium"
                               >
                                 {subItem.label}
                               </span>
@@ -177,7 +177,7 @@ export default function Navbar() {
                     <a
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-foreground hover:text-accent transition-colors duration-300 font-medium py-3 block"
+                      className="text-lg text-foreground hover:text-accent transition-colors duration-300 font-semibold py-3 block"
                     >
                       {item.label}
                     </a>
@@ -185,7 +185,7 @@ export default function Navbar() {
                     <Link href={item.href}>
                       <span
                         onClick={() => setIsOpen(false)}
-                        className="text-foreground hover:text-accent transition-colors duration-300 font-medium py-3 block cursor-pointer"
+                        className="text-lg text-foreground hover:text-accent transition-colors duration-300 font-semibold py-3 block cursor-pointer"
                       >
                         {item.label}
                       </span>
@@ -193,7 +193,7 @@ export default function Navbar() {
                   )}
                 </div>
               ))}
-              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground w-full mt-2">
+              <Button className="bg-accent hover:bg-accent/90 text-accent-foreground w-full mt-2 text-lg font-semibold py-3">
                 ابدأ الآن
               </Button>
             </div>

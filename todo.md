@@ -254,3 +254,10 @@
 - [x] Improve spacing and line-height
 - [x] Ensure consistency across all pages
 - [x] Test typography on different screen sizes
+
+## Navbar Font Size Fix
+- [x] Increase navbar link font sizes significantly
+- [x] Improve navbar text visibility and readability
+- [x] Fix any console errors
+- [x] Test navbar on different screen sizes
+- [x] Ensure all text is clearly readable
