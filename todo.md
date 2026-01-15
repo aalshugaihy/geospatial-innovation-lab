@@ -261,3 +261,9 @@
 - [x] Fix any console errors
 - [x] Test navbar on different screen sizes
 - [x] Ensure all text is clearly readable
+
+## Map Container Error Fix
+- [x] Investigate "Map container not found" error in Events page
+- [x] Fix Map component initialization timing
+- [x] Add proper error handling for map loading
+- [x] Test map on Events page
